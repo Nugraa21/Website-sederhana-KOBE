@@ -559,11 +559,11 @@ body, html {
 #fireworks-text {
     font-size: 12vw;
     font-weight: 900;
-    color: var(--primary-color);
-    text-shadow:
+    color: rgba(255, 0, 0, 0);
+    /* text-shadow:
         0 0 10px var(--primary-color),
         0 0 25px var(--shadow-color),
-        0 0 50px var(--primary-color);
+        0 0 50px var(--primary-color); */
     cursor: pointer;
     position: relative;
     animation: cyberGlitch 1.5s infinite;
@@ -572,7 +572,7 @@ body, html {
 @keyframes cyberGlitch {
     0%, 20%, 40%, 60%, 80% {
         transform: translate(0, 0);
-        color: var(--primary-color);
+        color: rgba(0, 255, 170, 0.829);
         text-shadow:
             0 0 10px var(--primary-color),
             0 0 25px var(--shadow-color),
