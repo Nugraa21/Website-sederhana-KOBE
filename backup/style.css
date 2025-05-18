@@ -1,0 +1,122 @@
+/* Animasi latar belakang */
+@keyframes bgMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Style body agar elemen ada di tengah layar */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(-45deg, #1e1e2f, #0a0a13, #2a2a3f, #1e1e2f);
+    background-size: 400% 400%;
+    animation: bgMove 15s ease infinite;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    overflow: hidden;
+    cursor: none    ;
+}
+
+/* Style elemen link #output dengan tema mancha */
+a#output {
+    color: #fff;
+    background: linear-gradient(135deg, #ff3cac, #784ba0, #2b86c5);
+    background-size: 300% 300%;
+    animation: glowPulse 3s ease-in-out infinite, fadeIn 1s ease-in-out;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 15rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+    border: 4px dashed #ffffffaa;
+    text-shadow: 2px 2px 4px #000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+}
+
+/* Hover efek makin keren */
+a:hover {
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3),
+                0 0 20px rgba(255, 0, 150, 0.5),
+                0 0 30px rgba(120, 75, 160, 0.5);
+    cursor: pointer;
+}
+
+/* Efek animasi masuk */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animasi glowing berdenyut */
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(255, 0, 150, 0.5),
+                    0 0 25px rgba(120, 75, 160, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255, 255, 255, 0.8),
+                    0 0 60px rgba(120, 75, 160, 0.8);
+    }
+}
+
+
+/* Style custom cursor bulat */
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255, 0, 150, 0.7);
+  border: 2px solid #ff0099;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.3s ease;
+  z-index: 9999;
+  mix-blend-mode: difference; /* biar kontras */
+}
+
+/* Animasi pulse saat klik */
+#custom-cursor.click {
+  animation: pulseClick 0.4s ease forwards;
+}
+
+@keyframes pulseClick {
+  0% {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 0, 150, 0.7);
+    opacity: 1;
+  }
+  50% {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 0, 150, 0.3);
+    opacity: 0.7;
+  }
+  100% {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(255, 0, 150, 0.7);
+    opacity: 1;
+  }
+}

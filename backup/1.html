@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cursor Particle Api Keren</title>
+<style>
+  /* Reset dan body setup */
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #1e1e2f, #0a0a13);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    overflow: hidden;
+    cursor: none; /* sembunyikan cursor default */
+  }
+
+  /* Custom cursor bulat */
+  .cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at center, #ff7c00, #d92e00);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px #ff7c00;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    z-index: 10000;
+  }
+
+  /* Cursor saat klik */
+  .cursor.click {
+    transform: translate(-50%, -50%) scale(1.6);
+    box-shadow: 0 0 20px #ff3300, 0 0 40px #ff3300;
+  }
+
+  /* Particle api keren */
+  .particle {
+    position: fixed;
+    pointer-events: none;
+    border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%; /* bentuk organik */
+    background: radial-gradient(circle at 30% 40%, #ffd36b, #ff7c00 60%, #d92e00 90%);
+    filter: drop-shadow(0 0 4px #ff7c00);
+    width: 8px;
+    height: 12px;
+    opacity: 0.8;
+    will-change: transform, opacity;
+    transform-origin: center bottom;
+    mix-blend-mode: screen;
+    animation: flicker 700ms infinite alternate ease-in-out;
+    z-index: 9999;
+  }
+
+  /* Variasi ukuran untuk particle */
+  .particle.size-small {
+    width: 5px;
+    height: 8px;
+    opacity: 0.6;
+  }
+  .particle.size-medium {
+    width: 9px;
+    height: 14px;
+    opacity: 0.9;
+  }
+  .particle.size-large {
+    width: 12px;
+    height: 18px;
+    opacity: 1;
+  }
+
+  /* Animasi flicker halus */
+  @keyframes flicker {
+    0% {
+      opacity: 0.8;
+      transform: scale(1) rotate(0deg);
+      filter: drop-shadow(0 0 4px #ff7c00);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(1.2) rotate(5deg);
+      filter: drop-shadow(0 0 8px #ffaf00);
+    }
+    100% {
+      opacity: 0.8;
+      transform: scale(1) rotate(0deg);
+      filter: drop-shadow(0 0 4px #ff7c00);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor"></div>
+
+<script>
+  const cursor = document.querySelector('.cursor');
+
+  // Update posisi cursor custom mengikuti mouse
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+
+    createParticle(e.clientX, e.clientY);
+  });
+
+  // Efek saat klik
+  window.addEventListener('mousedown', () => {
+    cursor.classList.add('click');
+  });
+  window.addEventListener('mouseup', () => {
+    cursor.classList.remove('click');
+  });
+
+  // Fungsi buat particle api
+  function createParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+
+    // Random pilih ukuran particle
+    const sizes = ['size-small', 'size-medium', 'size-large'];
+    const sizeClass = sizes[Math.floor(Math.random() * sizes.length)];
+    particle.classList.add(sizeClass);
+
+    document.body.appendChild(particle);
+
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+
+    const duration = 900 + Math.random() * 600;
+    const translateX = (Math.random() - 0.5) * 40; // gerakan bebas ke samping
+    const translateY = - (40 + Math.random() * 60); // naik lebih tinggi
+    const rotate = (Math.random() - 0.5) * 90; // rotasi acak
+
+    particle.animate([
+      { transform: 'translate(0, 0) rotate(0deg)', opacity: 0.8 },
+      { transform: `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg)`, opacity: 0 }
+    ], {
+      duration: duration,
+      easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
+      fill: 'forwards'
+    });
+
+    setTimeout(() => {
+      particle.remove();
+    }, duration);
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cyberpunk Neon Showcase - Ludang Prasetyo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #00ff88;
+            --shadow-color: #006633;
+            --secondary-forms: #ccffcc;
+            --background-gradient: linear-gradient(135deg, #0a1c17, #030907);
+            --glitch-color: #ff00ff;
+            --secondary-color: #ccffcc;
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(0, 20, 15, 0.5);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 20, 15, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--glitch-color);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: auto;
+            background: var(--background-gradient);
+            overflow-x: hidden;
+            font-family: 'Orbitron', sans-serif;
+            cursor: none;
+            width: 100%;
+            color: var(--secondary-color);
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #030907;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid var(--primary-color);
+            border-top: 5px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cyberpunk-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle at 50% 80%, rgba(0, 255, 128, 0.15), transparent 60%);
+            animation: cyberFlicker 6s infinite;
+        }
+
+        @keyframes cyberFlicker {
+            0%, 20%, 40%, 60%, 80% { opacity: 0.9; }
+            10%, 30%, 50%, 70% { opacity: 0.5; }
+        }
+
+        .neon-building {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(to top, rgba(0, 255, 128, 0.3), transparent);
+            animation: buildingGlow 4s infinite;
+        }
+
+        @keyframes buildingGlow {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .digital-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 20px,
+                rgba(0, 255, 128, 0.1) 20px,
+                rgba(0, 255, 128, 0.1) 22px
+            ),
+            repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                rgba(0, 255, 128, 0.1) 20px,
+                rgba(0, 255, 128, 0.1) 22px
+            );
+            opacity: 0.3;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-40px); }
+        }
+
+        .cyber-particle, .code-particle, .glitch-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: cyberFloat 5s linear infinite;
+            filter: drop-shadow(0 0 4px var(--primary-color));
+        }
+
+        .code-particle {
+            background: none;
+            font-size: 10px;
+            color: var(--primary-color);
+            animation: codeFall 6s linear infinite;
+        }
+
+        .glitch-particle {
+            width: 4px;
+            height: 4px;
+            background: var(--glitch-color);
+            animation: glitchFloat 3s linear infinite;
+        }
+
+        @keyframes cyberFloat {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--x-move), var(--y-move)); opacity: 0; }
+        }
+
+        @keyframes codeFall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        @keyframes glitchFloat {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--x-move), var(--y-move)); opacity: 0; }
+        }
+
+        .glitch-scanline {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--glitch-color), transparent);
+            opacity: 0.2;
+            animation: scanlineMove 3s infinite;
+        }
+
+        @keyframes scanlineMove {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .neon-sign {
+            position: absolute;
+            color: var(--primary-color);
+            font-size: 1.8em;
+            text-shadow: 0 0 12px var(--primary-color);
+            animation: neonFlicker 2s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes neonFlicker {
+            0%, 20%, 40%, 60%, 80% { opacity: 1; }
+            10%, 30%, 50%, 70% { opacity: 0.6; }
+        }
+
+        .cyber-orb {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, var(--primary-color), transparent 70%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 15px var(--primary-color));
+            animation: orbFloat 10s infinite;
+            z-index: 5;
+            transition: transform 0.3s ease;
+        }
+
+        .cyber-orb:hover {
+            transform: scale(1.5);
+            background: radial-gradient(circle, var(--glitch-color), transparent 70%);
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 30;
+            background: rgba(0, 20, 15, 0.5);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .logo {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color), 0 0 24px var(--shadow-color);
+            animation: glitchLogo 3s infinite;
+        }
+
+        @keyframes glitchLogo {
+            0%, 20%, 40%, 60%, 80% { transform: translate(0, 0); }
+            10% { transform: translate(3px, -3px); }
+            30% { transform: translate(-3px, 3px); }
+        }
+
+        .nav a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 1.2em;
+            margin-left: 20px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .nav a:hover {
+            color: var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color);
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 900px;
+            margin: 100px auto 60px;
+            padding: 30px;
+            background: rgba(0, 20, 15, 0.4);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: 0 0 25px var(--primary-color);
+            animation: hologramFade 4s infinite;
+        }
+
+        .intro h1 {
+            font-size: 2.8em;
+            color: var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .intro p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: var(--secondary-color);
+        }
+
+        @keyframes hologramFade {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .stats {
+            max-width: 900px;
+            margin: 60px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            padding: 30px;
+            background: rgba(0, 20, 15, 0.4);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: 0 0 25px var(--primary-color);
+        }
+
+        .stat-item {
+            text-align: center;
+            color: var(--secondary-color);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-item i {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-item h3 {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .stat-item p {
+            font-size: 1.1em;
+        }
+
+        .timeline {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(0, 20, 15, 0.4);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: 0 0 25px var(--primary-color);
+        }
+
+        .timeline h2 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        #container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        #fireworks-text {
+            font-size: 12vw;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-shadow:
+                0 0 10px var(--primary-color),
+                0 0 25px var(--shadow-color),
+                0 0 50px var(--primary-color);
+            cursor: pointer;
+            position: relative;
+            animation: cyberGlitch 3s infinite;
+        }
+
+        @keyframes cyberGlitch {
+            0%, 20%, 40%, 60%, 80% { transform: translate(0, 0); }
+            10% { transform: translate(6px, -6px); }
+            30% { transform: translate(-6px, 6px); }
+        }
+
+        .firework-letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(60px) rotateX(90deg);
+            transition: all 0.6s ease;
+            position: relative;
+        }
+
+        .firework-letter.visible {
+            opacity: 1;
+            transform: translateY(0) rotateX(0);
+        }
+
+        #fireworks-text:hover .firework-letter {
+            color: var(--glitch-color);
+            text-shadow: 0 0 15px var(--glitch-color);
+        }
+
+        .scroll-btn {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .scroll-btn:hover::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        .scroll-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px var(--primary-color);
+        }
+
+        .hologram-widget {
+            position: fixed;
+            top: 150px;
+            left: 20px;
+            width: 280px;
+            padding: 20px;
+            background: rgba(0, 20, 15, 0.6);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            box-shadow: 0 0 20px var(--primary-color);
+            z-index: 20;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .hologram-widget.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .hologram-widget h3 {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .hologram-widget p {
+            font-size: 1em;
+            color: var(--secondary-color);
+            line-height: 1.5;
+            opacity: 0;
+            animation: newsFade 15s infinite;
+        }
+
+        .hologram-widget p:nth-child(2) { animation-delay: 0s; }
+        .hologram-widget p:nth-child(3) { animation-delay: 3s; }
+        .hologram-widget p:nth-child(4) { animation-delay: 6s; }
+        .hologram-widget p:nth-child(5) { animation-delay: 9s; }
+        .hologram-widget p:nth-child(6) { animation-delay: 12s; }
+
+        @keyframes newsFade {
+            0%, 20% { opacity: 0; }
+            25%, 75% { opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+
+        .widget-toggle {
+            position: fixed;
+            top: 120px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 25;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .widget-toggle:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .widget-toggle i {
+            color: #000;
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .widget-toggle.active i {
+            transform: rotate(180deg);
+        }
+
+        .profiles-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1000px;
+            margin: 100px auto;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 100px;
+            background: rgba(0, 20, 15, 0.3);
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(0, 255, 128, 0.4);
+            animation: cyberPulse 7s ease-in-out infinite;
+        }
+
+        @keyframes cyberPulse {
+            0%, 100% { box-shadow: 0 0 50px rgba(0, 255, 128, 0.4); }
+            50% { box-shadow: 0 0 70px rgba(0, 255, 128, 0.6); }
+        }
+
+        .profile-card {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 20, 15, 0.5);
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 30px;
+            opacity: 0;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 128, 0.5);
+            width: 100%;
+            max-width: 900px;
+            perspective: 1200px;
+            cursor: pointer;
+            will-change: transform, box-shadow;
+        }
+
+        .profile-card:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 0 60px var(--primary-color);
+            border-color: var(--glitch-color);
+        }
+
+        .profile-card.visible {
+            opacity: 1;
+        }
+
+        .profile-card.anim-hologram {
+            transform: scale(0.5) rotateX(90deg);
+        }
+
+        .profile-card.anim-hologram.visible {
+            transform: scale(1) rotateX(0);
+            animation: hologramIn 0.8s ease;
+        }
+
+        @keyframes hologramIn {
+            0% { transform: scale(0.5) rotateX(90deg); opacity: 0; }
+            70% { transform: scale(1.1) rotateX(0); opacity: 0.8; }
+            100% { transform: scale(1) rotateX(0); opacity: 1; }
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            filter: drop-shadow(0 0 15px var(--primary-color));
+            margin-right: 30px;
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .profile-card:hover .profile-img {
+            transform: rotate(15deg) scale(1.15);
+            filter: drop-shadow(0 0 20px var(--glitch-color));
+        }
+
+        .profile-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .profile-name {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            margin: 0 0 15px;
+            text-shadow: 0 0 12px var(--primary-color), 0 0 25px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            animation: cyberFlicker 2s infinite;
+        }
+
+        .profile-card.visible .profile-name {
+            animation: typewriter 2.5s steps(20) forwards, cyberFlicker 2s infinite;
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes cyberFlicker {
+            0%, 20%, 40%, 60%, 80% { opacity: 1; }
+            10%, 30%, 50%, 70% { opacity: 0.7; }
+        }
+
+        .profile-details {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .profile-details.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .profile-desc, .profile-rank, .profile-skills, .profile-augments, .profile-project, .profile-stats, .profile-social {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .profile-social a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 15px;
+            transition: color 0.3s ease, text-shadow 0.3s ease, transform 0.3s ease;
+            font-size: 1.5em;
+        }
+
+        .profile-social a:hover {
+            color: var(--glitch-color);
+            text-shadow: 0 0 10px var(--glitch-color);
+            transform: scale(1.2);
+        }
+
+        .profile-skills i, .profile-augments i {
+            margin-right: 8px;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-skills i:hover, .profile-augments i:hover {
+            transform: rotate(360deg);
+        }
+
+        .details-toggle {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .details-toggle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .details-toggle:hover::after {
+            width: 150px;
+            height: 150px;
+        }
+
+        .details-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .details-toggle i {
+            margin-left: 8px;
+        }
+
+        .profile-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            background: rgba(0, 20, 15, 0.8);
+            border: 3px solid var(--primary-color);
+            border-radius: 15px;
+            box-shadow: 0 0 50px var(--primary-color);
+            padding: 30px;
+            z-index: 40;
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-popup.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .popup-close:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .popup-close i {
+            color: #000;
+            font-size: 1.2em;
+        }
+
+        .popup-content {
+            text-align: center;
+            color: var(--secondary-color);
+        }
+
+        .popup-content img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            filter: drop-shadow(0 0 15px var(--primary-color));
+            margin-bottom: 20px;
+        }
+
+        .popup-content h2 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            text-shadow: 0 0 12px var(--primary-color);
+            margin: 0 0 20px;
+            animation: cyberFlicker 2s infinite;
+        }
+
+        .popup-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .popup-content .profile-social a {
+            font-size: 1.8em;
+            margin: 0 15px;
+        }
+
+        .popup-scanline {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--glitch-color), transparent);
+            opacity: 0.3;
+            animation: scanlineMove 2s infinite;
+        }
+
+        .cyber-particle, .text-fire-particle, .profile-fire-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, var(--secondary-color), var(--glitch-color));
+            border-radius: 50%;
+            pointer-events: none;
+            animation: textFireFlicker 1.5s ease-out forwards;
+            filter: drop-shadow(0 0 6px var(--primary-color));
+        }
+
+        @keyframes textFireFlicker {
+            0% { opacity: 1; transform: translate(0, 0) scale(1); }
+            50% { opacity: 0.7; transform: translate(var(--x-move, 0px), var(--y-move, 0px)) scale(1.3); }
+            100% { opacity: 0; transform: translate(var(--x-move, 0px), var(--y-move, 0px)) scale(0.5); }
+        }
+
+        .firework-explode {
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, var(--secondary-color) 20%, var(--primary-color) 60%, transparent 80%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 20px var(--primary-color));
+            animation: explode 1.2s ease-out forwards;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--glitch-color);
+            border-radius: 50%;
+            animation: sparkleFade 1.5s ease-out forwards;
+        }
+
+        @keyframes sparkleFade {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--sparkle-x, 0px), var(--sparkle-y, 0px)); opacity: 0; }
+        }
+
+        @keyframes explode {
+            0% { transform: scale(0.3); opacity: 1; }
+            100% { transform: scale(6); opacity: 0; }
+        }
+
+        .cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, var(--primary-color), transparent 70%);
+            filter: drop-shadow(0 0 15px var(--primary-color));
+            transform: translate(-50%, -50%);
+            transition: transform 0.3s ease;
+            z-index: 20;
+        }
+
+        .cursor.click {
+            transform: translate(-50%, -50%) scale(2);
+            background: radial-gradient(circle, var(--glitch-color), transparent 70%);
+            filter: drop-shadow(0 0 20px var(--glitch-color));
+        }
+
+        .terminal {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 25px;
+            background: rgba(0, 20, 15, 0.7);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            box-shadow: 0 0 20px var(--primary-color);
+            font-family: 'Roboto Mono', monospace;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+
+        .terminal p {
+            margin: 5px 0;
+            opacity: 0;
+            animation: terminalType 10s infinite;
+        }
+
+        .terminal p:nth-child(1) { animation-delay: 0s; }
+        .terminal p:nth-child(2) { animation-delay: 2s; }
+        .terminal p:nth-child(3) { animation-delay: 4s; }
+        .terminal p:nth-child(4) { animation-delay: 6s; }
+        .terminal p:nth-child(5) { animation-delay: 8s; }
+
+        @keyframes terminalType {
+            0%, 20% { opacity: 0; }
+            25%, 75% { opacity: 1; }
+            80%, 100% { opacity: 0; }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px;
+            background: rgba(0, 20, 15, 0.5);
+            backdrop-filter: blur(12px);
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin-top: 100px;
+            border-top: 2px solid var(--primary-color);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .footer.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .footer-social a {
+            color: var(--primary-color);
+            font-size: 1.8em;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--glitch-color);
+            transform: scale(1.2);
+        }
+
+        /* Hidden profile cards */
+        .profile-card.hidden {
+            display: none;
+        }
+
+        /* Show more/less button */
+        .show-more-btn {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 30px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .show-more-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+        }
+
+        .show-more-btn:hover::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        .show-more-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px var(--primary-color);
+        }
+
+        .show-more-btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .show-more-btn.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Glitch effect for <code> elements */
+        code {
+            font-family: 'Roboto Mono', monospace;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--glitch-color);
+            position: relative;
+            animation: glitchText 2s infinite;
+            background: rgba(0, 20, 15, 0.3);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        code::before,
+        code::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: var(--glitch-color);
+        }
+
+        code::before {
+            animation: glitchShift 1s infinite;
+            transform: translate(2px, 0);
+            opacity: 0.5;
+        }
+
+        code::after {
+            animation: glitchShift 1.5s infinite reverse;
+            transform: translate(-2px, 0);
+            opacity: 0.5;
+        }
+
+        @keyframes glitchText {
+            0%, 20%, 40%, 60%, 80% { opacity: 1; }
+            10%, 30%, 50%, 70% { opacity: 0.6; }
+        }
+
+        @keyframes glitchShift {
+            0%, 40%, 44%, 58%, 61%, 65%, 69%, 73%, 100% { transform: translate(0); }
+            41% { transform: translate(3px, 0); }
+            42% { transform: translate(-3px, 0); }
+            59% { transform: translate(2px, 2px); }
+            60% { transform: translate(-2px, -2px); }
+        }
+
+        @media (max-width: 1024px) {
+            .intro, .stats, .timeline, .profiles-container, .terminal {
+                max-width: 90%;
+                padding: 20px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .profile-card {
+                max-width: 80%;
+                padding: 20px;
+            }
+
+            .profile-img {
+                width: 140px;
+                height: 140px;
+            }
+
+            .hologram-widget {
+                width: 250px;
+            }
+
+            .profile-popup {
+                max-width: 80%;
+            }
+
+            .show-more-btn {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 10px 15px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo {
+                font-size: 1.8em;
+            }
+
+            .nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav a {
+                font-size: 1em;
+                margin: 5px 10px;
+            }
+
+            .intro {
+                margin: 50px 15px;
+                padding: 15px;
+            }
+
+            .intro h1 {
+                font-size: 2em;
+            }
+
+            .intro p {
+                font-size: 1.1em;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                padding: 15px;
+                margin: 40px 15px;
+            }
+
+            .stat-item h3 {
+                font-size: 1.8em;
+            }
+
+            .stat-item p {
+                font-size: 1em;
+            }
+
+            .timeline {
+                padding: 15px;
+                margin: 40px 15px;
+            }
+
+            .timeline-item {
+                padding-left: 30px;
+            }
+
+            .timeline-item::before {
+                left: 5px;
+                width: 8px;
+            }
+
+            #fireworks-text {
+                font-size: 15vw;
+            }
+
+            .scroll-btn {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+
+            .hologram-widget {
+                width: 200px;
+                left: 10px;
+                top: 80px;
+                padding: 15px;
+            }
+
+            .hologram-widget h3 {
+                font-size: 1.2em;
+            }
+
+            .hologram-widget p {
+                font-size: 0.9em;
+            }
+
+            .widget-toggle {
+                top: 60px;
+                left: 10px;
+                width: 35px;
+                height: 35px;
+            }
+
+            .profiles-container {
+                padding: 15px;
+                margin: 50px 15px;
+                gap: 60px;
+            }
+
+            .profile-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 15px;
+                max-width: 90%;
+            }
+
+            .profile-img {
+                margin-right: 0;
+                margin-bottom: 20px;
+                width: 120px;
+                height: 120px;
+            }
+
+            .profile-content {
+                text-align: center;
+            }
+
+            .profile-name {
+                font-size: 1.8em;
+            }
+
+            .profile-desc, .profile-rank, .profile-skills, .profile-augments, .profile-project, .profile-stats, .profile-social {
+                font-size: 0.9em;
+            }
+
+            .cyber-orb {
+                width: 40px;
+                height: 40px;
+            }
+
+            .terminal {
+                margin: 30px 15px;
+                padding: 15px;
+                font-size: 0.9em;
+            }
+
+            .footer {
+                padding: 30px;
+                font-size: 1em;
+            }
+
+            .footer-social a {
+                font-size: 1.5em;
+                margin: 0 10px;
+            }
+
+            .profile-popup {
+                max-width: 90%;
+                padding: 20px;
+            }
+
+            .popup-content img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .popup-content h2 {
+                font-size: 2em;
+            }
+
+            .popup-content p {
+                font-size: 1em;
+            }
+
+            .show-more-btn {
+                padding: 10px 20px;
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.5em;
+            }
+
+            .nav a {
+                font-size: 0.9em;
+                margin: 5px 8px;
+            }
+
+            .intro h1 {
+                font-size: 1.8em;
+            }
+
+            .intro p {
+                font-size: 1em;
+            }
+
+            #fireworks-text {
+                font-size: 20vw;
+            }
+
+            .hologram-widget {
+                width: 180px;
+                top: 60px;
+                padding: 10px;
+            }
+
+            .hologram-widget h3 {
+                font-size: 1em;
+            }
+
+            .hologram-widget p {
+                font-size: 0.8em;
+            }
+
+            .widget-toggle {
+                top: 40px;
+                width: 30px;
+                height: 30px;
+            }
+
+            .profile-name {
+                font-size: 1.5em;
+            }
+
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .cyber-orb {
+                width: 30px;
+                height: 30px;
+            }
+
+            .details-toggle {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .show-more-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <div class="cyberpunk-bg">
+        <div class="neon-building"></div>
+        <div class="digital-grid"></div>
+        <div class="neon-sign" style="top: 10%; left: 5%;">Neo Jakarta 2077</div>
+        <div class="neon-sign" style="top: 20%; right: 5%;">Cyber Nexus</div>
+        <div class="cyber-orb" style="top: 30%; left: 10%;"></div>
+        <div class="cyber-orb" style="top: 50%; right: 10%;"></div>
+    </div>
+
+    <header class="header">
+        <div class="logo">CYBERPUNK SHOWCASE</div>
+        <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#intro">About</a>
+            <a href="#stats">Stats</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#profiles">Profiles</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="widget-toggle" id="widget-toggle">
+        <i class="fas fa-eye"></i>
+    </div>
+    <div class="hologram-widget" id="hologram-widget">
+        <h3>Cyber News</h3>
+        <p>Quantum Hackers Strike Nexus</p>
+        <p>Neon Chips Boost Creativity 300%</p>
+        <p>Hologram v2.0 Launched in Neo Jakarta</p>
+        <p>AI Rebellion Detected in Sector 7</p>
+        <p>New Quantum Core Unveiled in Nexus Plaza</p>
+    </div>
+
+    <div id="container">
+        <div id="fireworks-text" aria-label="Klik untuk animasi digital glitch">KOBE</div>
+        <button class="scroll-btn" onclick="scrollToIntro()">Discover Neon</button>
+    </div>
+
+    <div class="cursor" id="custom-cursor"></div>
+
+    <section class="intro" id="intro">
+        <h1>Welcome to Neon Showcase</h1>
+        <p>In the pulsating heart of Neo Jakarta 2077, Neon Showcase is the ultimate digital nexus for cyberpunk pioneers. Powered by quantum neural networks and neon-infused chips, we unite visionaries who redefine technology, art, and human augmentation. Explore a city where neon never sleeps and innovation knows no bounds.</p>
+    </section>
+
+    <section class="stats" id="stats">
+        <div class="stat-item">
+            <i class="fas fa-users"></i>
+            <h3 data-count="2500">0</h3>
+            <p>Cyber Pioneers</p>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-code"></i>
+            <h3 data-count="5000">0</h3>
+            <p>Projects Launched</p>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-microchip"></i>
+            <h3 data-count="1000">0</h3>
+            <p>Neon Chips Deployed</p>
+        </div>
+        <div class="stat-item">
+            <i class="fas fa-globe"></i>
+            <h3 data-count="150">0</h3>
+            <p>Global Nodes</p>
+        </div>
+    </section>
+
+    <section class="timeline" id="timeline">
+        <h2>Nexus History</h2>
+        <div class="timeline-item">
+            <h3>2060</h3>
+            <p>First Neon Chip prototype developed, revolutionizing neural interfaces.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2065</h3>
+            <p>Neo Jakarta declared global cyberpunk capital.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2070</h3>
+            <p>Quantum Nexus Network goes online, connecting 1M users.</p>
+        </div>
+        <div class="timeline-item">
+            <h3>2077</h3>
+            <p>Neon Showcase launched, uniting cyber pioneers worldwide.</p>
+        </div>
+    </section>
+
+    <div class="profiles-container" id="profiles">
+        <div class="profile-card" data-profile="1">
+            <img src="https://via.placeholder.com/160" alt="Profile 1" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">John "Neon" Doe</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Master Cyber Developer creating immersive AR worlds with <code>WebXR</code>.</p>
+                    <p class="profile-rank">Cyber Rank: Alpha Hacker</p>
+                    <p class="profile-skills"><i class="fas fa-vr-cardboard"></i> Skills: AR/VR, <code>TypeScript</code>, Neural Interfaces, <code>WebGL</code></p>
+                    <p class="profile-augments"><i class="fas fa-microchip"></i> Augmentations: Neural Link v4, Quantum Optic</p>
+                    <p class="profile-project">Latest Project: HoloCity v4.0 - Next-gen AR metropolis</p>
+                    <p class="profile-stats">Hack Success Rate: 98% | Code Efficiency: 92%</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card" data-profile="2">
+            <img src="https://via.placeholder.com/160" alt="Profile 2" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Jane "Synth" Smith</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">UI/UX Designer specializing in cybernetic interfaces.</p>
+                    <p class="profile-rank">Cyber Rank: Neon Architect</p>
+                    <p class="profile-skills"><i class="fas fa-paint-brush"></i> Skills: UI/UX, Holography, Cyber Aesthetics, <code>Figma</code></p>
+                    <p class="profile-augments"><i class="fas fa-eye"></i> Augmentations: HoloVision, Neural Sketchpad</p>
+                    <p class="profile-project">Latest Project: NeonOS Dashboard v2.0</p>
+                    <p class="profile-stats">Design Impact: 95% | User Satisfaction: 90%</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card" data-profile="3">
+            <img src="https://via.placeholder.com/160" alt="Profile 3" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Alex "Circuit" Johnson</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Frontend Engineer with a knack for glitch animations.</p>
+                    <p class="profile-rank">Cyber Rank: Code Samurai</p>
+                    <p class="profile-skills"><i class="fas fa-code"></i> Skills: <code>React</code>, <code>WebGL</code>, Cyberpunk Animations, <code>GSAP</code></p>
+                    <p class="profile-augments"><i class="fas fa-bolt"></i> Augmentations: Reflex Booster, Code Cortex</p>
+                    <p class="profile-project">Latest Project: Nexus Portal v3.0</p>
+                    <p class="profile-stats">Animation FPS: 60 | Code Deploy Speed: 1.2s</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-codepen"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card" data-profile="4">
+            <img src="https://via.placeholder.com/160" alt="Profile 4" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Emily "Glow" Davis</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Digital Artist creating neon-infused visuals.</p>
+                    <p class="profile-rank">Cyber Rank: Luminary</p>
+                    <p class="profile-skills"><i class="fas fa-palette"></i> Skills: 3D Modeling, Neon Art, Holography, <code>Blender</code></p>
+                    <p class="profile-augments"><i class="fas fa-lightbulb"></i> Augmentations: ColorSync Retina, ArtCore</p>
+                    <p class="profile-project">Latest Project: Cyberpunk Cityscape v2.0</p>
+                    <p class="profile-stats">Art Reach: 1.5M views | Render Time: 2.3s</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-behance"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card" data-profile="5">
+            <img src="https://via.placeholder.com/160" alt="Profile 5" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Michael "Byte" Brown</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Backend Developer securing neural networks.</p>
+                    <p class="profile-rank">Cyber Rank: Data Warden</p>
+                    <p class="profile-skills"><i class="fas fa-shield-alt"></i> Skills: <code>Node.js</code>, <code>Blockchain</code>, Cybersecurity, <code>Ethereum</code></p>
+                    <p class="profile-augments"><i class="fas fa-lock"></i> Augmentations: CryptoShield, DataVault</p>
+                    <p class="profile-project">Latest Project: Secure Nexus API v2.0</p>
+                    <p class="profile-stats">Security Uptime: 99.9% | Breach Attempts: 0</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card hidden" data-profile="6">
+            <img src="https://via.placeholder.com/160" alt="Profile 6" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Sarah "Pulse" Lee</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">AI Specialist developing sentient neural networks.</p>
+                    <p class="profile-rank">Cyber Rank: Quantum Mind</p>
+                    <p class="profile-skills"><i class="fas fa-brain"></i> Skills: AI, <code>Python</code>, Neural Nets, <code>TensorFlow</code></p>
+                    <p class="profile-augments"><i class="fas fa-cog"></i> Augmentations: NeuroSync, AI Core</p>
+                    <p class="profile-project">Latest Project: Sentient AI v1.0</p>
+                    <p class="profile-stats">AI Accuracy: 97% | Processing Speed: 1.5ms</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card hidden" data-profile="7">
+            <img src="https://via.placeholder.com/160" alt="Profile 7" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Liam "Shade" Carter</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Cybersecurity Expert protecting Nexus from hacks.</p>
+                    <p class="profile-rank">Cyber Rank: Shadow Guardian</p>
+                    <p class="profile-skills"><i class="fas fa-shield-alt"></i> Skills: Penetration Testing, Encryption, <code>Kali Linux</code></p>
+                    <p class="profile-augments"><i class="fas fa-lock"></i> Augmentations: Stealth Chip, CryptoLink</p>
+                    <p class="profile-project">Latest Project: Nexus Firewall v3.0</p>
+                    <p class="profile-stats">Threats Blocked: 10K | Detection Rate: 99%</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card hidden" data-profile="8">
+            <img src="https://via.placeholder.com/160" alt="Profile 8" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Maya "Spark" Nguyen</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Robotics Engineer building autonomous drones.</p>
+                    <p class="profile-rank">Cyber Rank: Drone Master</p>
+                    <p class="profile-skills"><i class="fas fa-robot"></i> Skills: Robotics, <code>C++</code>, <code>ROS</code>, Drone AI</p>
+                    <p class="profile-augments"><i class="fas fa-wrench"></i> Augmentations: MechLink, Precision Optics</p>
+                    <p class="profile-project">Latest Project: NeoDrone Swarm v2.0</p>
+                    <p class="profile-stats">Drone Uptime: 98% | Mission Success: 95%</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card hidden" data-profile="9">
+            <img src="https://via.placeholder.com/160" alt="Profile 9" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Ethan "Blaze" Kim</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Game Developer creating cyberpunk VR worlds.</p>
+                    <p class="profile-rank">Cyber Rank: Virtual Smith</p>
+                    <p class="profile-skills"><i class="fas fa-gamepad"></i> Skills: <code>Unity</code>, <code>C#</code>, VR, <code>Unreal Engine</code></p>
+                    <p class="profile-augments"><i class="fas fa-vr-cardboard"></i> Augmentations: VR Cortex, MotionSync</p>
+                    <p class="profile-project">Latest Project: CyberVerse v1.0</p>
+                    <p class="profile-stats">Player Engagement: 92% | Frame Rate: 90 FPS</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <div class="profile-card hidden" data-profile="10">
+            <img src="https://via.placeholder.com/160" alt="Profile 10" class="profile-img">
+            <div class="profile-content">
+                <h2 class="profile-name">Olivia "Flux" Wong</h2>
+                <div class="profile-details">
+                    <p class="profile-desc">Data Scientist analyzing quantum data streams.</p>
+                    <p class="profile-rank">Cyber Rank: Data Oracle</p>
+                    <p class="profile-skills"><i class="fas fa-chart-line"></i> Skills: Data Science, <code>R</code>, Quantum Analytics, <code>Pandas</code></p>
+                    <p class="profile-augments"><i class="fas fa-database"></i> Augmentations: DataLink, Quantum Processor</p>
+                    <p class="profile-project">Latest Project: Quantum Insights v1.0</p>
+                    <p class="profile-stats">Data Accuracy: 96% | Processing Time: 0.8s</p>
+                    <p class="profile-social">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </p>
+                </div>
+                <button class="details-toggle" onclick="toggleDetails(this)">Show Details <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </div>
+        <button class="show-more-btn" id="show-more-btn" aria-label="Show more profiles">Show More <i class="fas fa-chevron-down"></i></button>
+    </div>
+
+    <div class="profile-popup" id="profile-popup">
+        <button class="popup-close" onclick="closePopup()"><i class="fas fa-times"></i></button>
+        <div class="popup-content" id="popup-content"></div>
+        <div class="popup-scanline"></div>
+    </div>
+
+    <div class="terminal" id="contact">
+        <p>> Initializing Cyberpunk Terminal...</p>
+        <p>> Connecting to Neon Showcase Nexus...</p>
+        <p>> Contact: <code>ludang@neonshowcase.net</code></p>
+        <p>> Run: <code>join_revolution --now</code></p>
+        <p>> System Status: Quantum Core Online</p>
+    </div>
+
+    <footer class="footer">
+        <p>Neon Showcase | Crafted by Ludang Prasetyo in Neo Jakarta 2077</p>
+        <p>Join the cyberpunk revolution. Embrace the neon future.</p>
+        <div class="footer-social">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+    </footer>
+
+<script>
+    // Constants and configuration
+const PARTICLE_CONFIG = {
+    cyber: { interval: 200, duration: 4000 },
+    code: { interval: 250, duration: 6000 },
+    glitch: { interval: 300, duration: 3000 },
+    scanline: { interval: 1200, duration: 3000 },
+    textFire: { interval: 100, duration: 1500 },
+    profileFire: { duration: 1500 }
+};
+
+// Utility function to safely query elements
+const safeQuery = (selector, context = document) => {
+    const element = context.querySelector(selector);
+    if (!element) console.warn(`Element not found: ${selector}`);
+    return element;
+};
+
+// Page load handler
+window.addEventListener('load', () => {
+    const loader = safeQuery('.loader');
+    if (loader) {
+        setTimeout(() => loader.classList.add('hidden'), 800);
+    }
+    // Set data-text for all <code> elements to support glitch effect
+    document.querySelectorAll('code').forEach(code => {
+        code.setAttribute('data-text', code.textContent);
+    });
+    initializeFireworksText();
+    initializeCursor();
+    initializeWidget();
+    initializeProfiles();
+    initializeShowMore();
+    initializeScrollReveal();
+    initializeStatCounters();
+});
+
+// Particle creation functions
+function createParticle(type, options = {}) {
+    const { x, y, container = '.cyberpunk-bg', className, duration, properties = {} } = options;
+    const particle = document.createElement('div');
+    particle.classList.add(className);
+    
+    if (x !== undefined) particle.style.left = `${x}px`;
+    if (y !== undefined) particle.style.top = `${y}px`;
+    
+    Object.entries(properties).forEach(([key, value]) => {
+        particle.style.setProperty(key, value);
+    });
+
+    const target = safeQuery(container) || document.body;
+    target.appendChild(particle);
+    setTimeout(() => particle.remove(), duration);
+}
+
+function createCyberParticle() {
+    createParticle('cyber', {
+        className: 'cyber-particle',
+        duration: PARTICLE_CONFIG.cyber.duration,
+        properties: {
+            left: `${Math.random() * window.innerWidth}px`,
+            top: `${Math.random() * window.innerHeight}px`,
+            '--x-move': `${(Math.random() - 0.5) * 200}px`,
+            '--y-move': `${(Math.random() - 0.5) * 200}px`
+        }
+    });
+}
+
+function createCodeParticle() {
+    const particle = document.createElement('div');
+    particle.classList.add('code-particle');
+    particle.textContent = Math.random() > 0.5 ? '1' : '0';
+    particle.style.left = `${Math.random() * window.innerWidth}px`;
+    const target = safeQuery('.cyberpunk-bg') || document.body;
+    target.appendChild(particle);
+    setTimeout(() => particle.remove(), PARTICLE_CONFIG.code.duration);
+}
+
+function createGlitchParticle() {
+    createParticle('glitch', {
+        className: 'glitch-particle',
+        duration: PARTICLE_CONFIG.glitch.duration,
+        properties: {
+            left: `${Math.random() * window.innerWidth}px`,
+            top: `${Math.random() * window.innerHeight}px`,
+            '--x-move': `${(Math.random() - 0.5) * 100}px`,
+            '--y-move': `${(Math.random() - 0.5) * 100}px`
+        }
+    });
+}
+
+function createGlitchScanline() {
+    createParticle('scanline', {
+        className: 'glitch-scanline',
+        duration: PARTICLE_CONFIG.scanline.duration
+    });
+}
+
+// Initialize particle effects
+const particleIntervals = [
+    setInterval(createCyberParticle, PARTICLE_CONFIG.cyber.interval),
+    setInterval(createCodeParticle, PARTICLE_CONFIG.code.interval),
+    setInterval(createGlitchParticle, PARTICLE_CONFIG.glitch.interval),
+    setInterval(createGlitchScanline, PARTICLE_CONFIG.scanline.interval)
+];
+
+// Fireworks text animation
+function initializeFireworksText() {
+    const fireworksText = safeQuery('#fireworks-text');
+    if (!fireworksText) return;
+
+    fireworksText.innerHTML = fireworksText.textContent
+        .split('')
+        .map(char => 
+            char === ' ' 
+                ? '<span class="firework-letter"> </span>' 
+                : `<span class="firework-letter">${char}</span>`
+        )
+        .join('');
+
+    const letters = fireworksText.querySelectorAll('.firework-letter');
+    letters.forEach((letter, i) => {
+        setTimeout(() => letter.classList.add('visible'), i * 200);
+    });
+
+    // Click animation
+    fireworksText.addEventListener('click', () => {
+        if (fireworksText.classList.contains('transitioning')) return;
+        fireworksText.classList.add('transitioning');
+
+        letters.forEach((letter, i) => {
+            setTimeout(() => explodeFirework(letter), i * 250);
+        });
+
+        setTimeout(() => {
+            letters.forEach((letter, i) => {
+                setTimeout(() => {
+                    letter.style.opacity = '0';
+                    letter.style.transform = 'translateY(100px) scale(0.5)';
+                }, i * 50);
+            });
+        }, 2000);
+
+        setTimeout(() => {
+            fireworksText.classList.remove('transitioning');
+            letters.forEach(letter => {
+                letter.style.opacity = '0';
+                letter.style.transform = 'translateY(60px) rotateX(90deg)';
+                setTimeout(() => {
+                    letter.classList.add('visible');
+                    letter.style.opacity = '1';
+                    letter.style.transform = 'none';
+                }, 500);
+            });
+        }, 3000);
+    });
+
+    // Periodic text fire particles
+    setInterval(() => {
+        letters.forEach(letter => {
+            if (Math.random() < 0.3) {
+                createTextFireParticle(letter);
+            }
+        });
+    }, PARTICLE_CONFIG.textFire.interval);
+}
+
+// Firework explosion effect
+function explodeFirework(letter) {
+    const rect = letter.getBoundingClientRect();
+    const explode = document.createElement('div');
+    explode.classList.add('firework-explode');
+    explode.style.top = `${rect.top + rect.height / 2}px`;
+    explode.style.left = `${rect.left + rect.width / 2}px`;
+    document.body.appendChild(explode);
+
+    for (let i = 0; i < 12; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.setProperty('--sparkle-x', `${(Math.random() - 0.5) * 100}px`);
+        sparkle.style.setProperty('--sparkle-y', `${(Math.random() - 0.5) * 100}px`);
+        explode.appendChild(sparkle);
+    }
+
+    setTimeout(() => explode.remove(), 1200);
+}
+
+// Text fire particle
+function createTextFireParticle(letter) {
+    const rect = letter.getBoundingClientRect();
+    createParticle('textFire', {
+        className: 'text-fire-particle',
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+        duration: PARTICLE_CONFIG.textFire.duration,
+        properties: {
+            '--x-move': `${(Math.random() - 0.5) * 40}px`,
+            '--y-move': `${(Math.random() - 0.5) * 40}px`
+        }
+    });
+}
+
+// Custom cursor
+function initializeCursor() {
+    const cursor = safeQuery('#custom-cursor');
+    if (!cursor) return;
+
+    window.addEventListener('mousemove', e => {
+        cursor.style.left = `${e.clientX}px`;
+        cursor.style.top = `${e.clientY}px`;
+
+        if (Math.random() < 0.3) {
+            createParticle('cursor', {
+                className: 'cyber-particle',
+                x: e.clientX,
+                y: e.clientY,
+                duration: 1500,
+                properties: {
+                    '--x-move': `${(Math.random() - 0.5) * 50}px`,
+                    '--y-move': `${(Math.random() - 0.5) * 50}px`
+                }
+            });
+        }
+    });
+
+    window.addEventListener('mousedown', () => {
+        cursor.classList.add('click');
+        setTimeout(() => cursor.classList.remove('click'), 300);
+    });
+}
+
+// Scroll to intro
+function scrollToIntro() {
+    const intro = safeQuery('#intro');
+    if (intro) {
+        intro.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Widget toggle
+function initializeWidget() {
+    const widgetToggle = safeQuery('#widget-toggle');
+    const widget = safeQuery('#hologram-widget');
+    if (!widgetToggle || !widget) return;
+
+    widgetToggle.addEventListener('click', () => {
+        widget.classList.toggle('active');
+        widgetToggle.classList.toggle('active');
+    });
+}
+
+// Profile details toggle
+function toggleDetails(button) {
+    const profileContent = button.parentElement;
+    const details = safeQuery('.profile-details', profileContent);
+    if (!details) return;
+
+    const isVisible = details.classList.contains('visible');
+    details.classList.toggle('visible');
+    button.innerHTML = `${isVisible ? 'Show' : 'Hide'} Details <i class="fas fa-chevron-${isVisible ? 'down' : 'up'}"></i>`;
+}
+
+// Profile popup
+function initializeProfiles() {
+    const profileCards = document.querySelectorAll('.profile-card');
+    const popup = safeQuery('#profile-popup');
+    const popupContent = safeQuery('#popup-content', popup);
+
+    profileCards.forEach(card => {
+        card.addEventListener('click', e => {
+            if (e.target.classList.contains('details-toggle') || e.target.closest('.details-toggle')) return;
+
+            const name = safeQuery('.profile-name', card).textContent;
+            const imgSrc = safeQuery('.profile-img', card).src;
+            const details = safeQuery('.profile-details', card).innerHTML;
+
+            popupContent.innerHTML = `
+                <img src="${imgSrc}" alt="${name}">
+                <h2>${name}</h2>
+                ${details}
+            `;
+            popup.classList.add('active');
+            createProfileFireParticles(card);
+        });
+    });
+}
+
+// Close popup
+function closePopup() {
+    const popup = safeQuery('#profile-popup');
+    if (popup) popup.classList.remove('active');
+}
+
+// Profile fire particles
+function createProfileFireParticles(card) {
+    const rect = card.getBoundingClientRect();
+    for (let i = 0; i < 10; i++) {
+        createParticle('profileFire', {
+            className: 'profile-fire-particle',
+            x: rect.left + Math.random() * rect.width,
+            y: rect.top + Math.random() * rect.height,
+            duration: PARTICLE_CONFIG.profileFire.duration,
+            properties: {
+                '--x-move': `${(Math.random() - 0.5) * 60}px`,
+                '--y-move': `${(Math.random() - 0.5) * 60}px`
+            }
+        });
+    }
+}
+
+// Show more/less profiles
+function initializeShowMore() {
+    const showMoreBtn = safeQuery('#show-more-btn');
+    const hiddenProfiles = document.querySelectorAll('.profile-card.hidden');
+    if (!showMoreBtn || hiddenProfiles.length === 0) return;
+
+    showMoreBtn.addEventListener('click', () => {
+        const isShowing = showMoreBtn.classList.contains('active');
+        hiddenProfiles.forEach((profile, i) => {
+            profile.classList.toggle('hidden');
+            if (!isShowing) {
+                setTimeout(() => {
+                    profile.classList.add('visible', 'anim-hologram');
+                }, i * 200);
+            } else {
+                profile.classList.remove('visible', 'anim-hologram');
+            }
+        });
+        showMoreBtn.classList.toggle('active');
+        showMoreBtn.innerHTML = `${isShowing ? 'Show More' : 'Show Less'} <i class="fas fa-chevron-${isShowing ? 'down' : 'up'}"></i>`;
+    });
+}
+
+// Scroll reveal animations
+function initializeScrollReveal() {
+    const elements = document.querySelectorAll('.stat-item, .timeline-item, .profile-card:not(.hidden), .footer');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                if (entry.target.classList.contains('profile-card')) {
+                    entry.target.classList.add('anim-hologram');
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+
+    elements.forEach(el => observer.observe(el));
+}
+
+// Stat counters
+function initializeStatCounters() {
+    const statItems = document.querySelectorAll('.stat-item h3');
+    statItems.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-count'));
+        let count = 0;
+        const increment = target / 100;
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                const interval = setInterval(() => {
+                    count += increment;
+                    stat.textContent = Math.round(count);
+                    if (count >= target) {
+                        stat.textContent = target;
+                        clearInterval(interval);
+                    }
+                }, 20);
+                observer.disconnect();
+            }
+        }, { threshold: 0.5 });
+        observer.observe(stat);
+    });
+}
+</script>
+</body>
+</html>

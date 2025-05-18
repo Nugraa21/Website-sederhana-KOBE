@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Animasi Api dan Kembang Api - Ludang Prasetyo</title>
+<style>
+  :root {
+    --primary-color: #00ff88;
+    --shadow-color: #006633;
+    --secondary-color: #ccffcc;
+    --background-gradient: linear-gradient(135deg, #1a3c34, #071a15);
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: auto;
+    background: var(--background-gradient);
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    cursor: none;
+    width: 100%;
+  }
+
+  #container {
+    position: relative;
+    z-index: 10;
+    user-select: none;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .background-fire {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    filter: drop-shadow(0 0 15px var(--primary-color));
+  }
+
+  .fire-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.95) 30%, var(--primary-color) 85%);
+    animation: fireRise 3s ease-out 1;
+    transform-origin: center;
+  }
+
+  @keyframes fireRise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  .background-objects {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 800px;
+    margin-left: -400px;
+    margin-top: -400px;
+    pointer-events: none;
+    z-index: 0;
+    animation: rotateGlow 20s linear infinite;
+  }
+
+  .glow-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-color), transparent 60%);
+    opacity: 0.3;
+    animation: pulseGlow 5s ease-in-out infinite;
+  }
+
+  .glow1 { width: 400px; height: 400px; top: 15%; left: 20%; }
+  .glow2 { width: 450px; height: 450px; top: 55%; left: 60%; }
+  .glow3 { width: 300px; height: 300px; top: 35%; left: 40%; }
+
+  @keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+  }
+
+  #fireworks-text {
+    width: 100%;
+    font-size: 8vw;
+    font-weight: 900;
+    color: var(--primary-color);
+    text-shadow:
+      0 0 8px var(--primary-color),
+      0 0 20px var(--shadow-color),
+      0 0 40px var(--primary-color),
+      2px 2px 0 var(--shadow-color),
+      4px 4px 0 var(--shadow-color),
+      6px 6px 0 var(--shadow-color),
+      8px 8px 0 var(--shadow-color);
+    cursor: pointer;
+    transition: transform 0.4s ease;
+    display: inline-block;
+    position: relative;
+  }
+
+  .firework-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.5s ease;
+    position: relative;
+  }
+
+  .firework-letter.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #fireworks-text:hover .firework-letter {
+    color: var(--secondary-color);
+  }
+
+  #fireworks-text.transitioning .firework-letter {
+    animation: slideUpFade 0.8s forwards;
+  }
+
+  @keyframes slideUpFade {
+    to {
+      opacity: 0;
+      transform: translateY(-60px);
+    }
+  }
+
+  .text-fire-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, var(--secondary-color), var(--shadow-color));
+    border-radius: 50%;
+    pointer-events: none;
+    animation: textFireFlicker 1.2s ease-out forwards;
+    filter: drop-shadow(0 0 4px var(--primary-color));
+  }
+
+  @keyframes textFireFlicker {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: translate(var(--x-move, 0px), var(--y-move, 0px)) scale(1.2);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--x-move, 0px), var(--y-move, 0px)) scale(0.5);
+    }
+  }
+
+  .particle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, var(--secondary-color), var(--shadow-color));
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleMove 1.5s ease-out forwards;
+    filter: drop-shadow(0 0 5px var(--primary-color));
+  }
+
+  @keyframes particleMove {
+    0% {
+      opacity: 1;
+      transform: translate(0, 0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--x-move, 0px), -50px) scale(0.3);
+    }
+  }
+
+  .firework-explode {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle, var(--secondary-color) 20%, var(--primary-color) 60%, transparent 80%);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 12px var(--primary-color));
+    animation: explode 0.8s ease-out forwards;
+    pointer-events: none;
+    transform-origin: center;
+    z-index: 15;
+  }
+
+  .sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--secondary-color);
+    border-radius: 50%;
+    animation: sparkleFade 1s ease-out forwards;
+  }
+
+  @keyframes sparkleFade {
+    0% { transform: translate(0, 0); opacity: 1; }
+    100% { transform: translate(var(--sparkle-x, 0px), var(--sparkle-y, 0px)); opacity: 0; }
+  }
+
+  @keyframes explode {
+    0% { transform: scale(0.3); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+  }
+
+  .cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, var(--primary-color), transparent 70%);
+    filter: drop-shadow(0 0 10px var(--primary-color));
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease;
+    z-index: 20;
+  }
+
+  .cursor.click {
+    transform: translate(-50%, -50%) scale(2);
+    background: radial-gradient(circle, var(--shadow-color), transparent 70%);
+    filter: drop-shadow(0 0 16px var(--shadow-color));
+  }
+
+  #fireworks-text:hover {
+    transform: rotateX(15deg) rotateY(15deg) scale(1.1);
+    text-shadow:
+      0 0 15px var(--primary-color),
+      0 0 30px var(--shadow-color),
+      0 0 50px var(--primary-color),
+      3px 3px 0 var(--shadow-color),
+      6px 6px 0 var(--shadow-color),
+      9px 9px 0 var(--shadow-color),
+      12px 12px 0 var(--shadow-color);
+  }
+
+  /* Styling untuk container profil */
+  .profiles-container {
+    position: relative;
+    z-index: 10;
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+    background: radial-gradient(circle, rgba(0, 255, 128, 0.1), transparent 70%);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 255, 128, 0.2);
+    animation: pulseContainer 10s ease-in-out infinite;
+  }
+
+  @keyframes pulseContainer {
+    0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 128, 0.2); }
+    50% { box-shadow: 0 0 50px rgba(0, 255, 128, 0.4); }
+  }
+
+  /* Styling untuk setiap kartu profil */
+  .profile-card {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 77, 41, 0.3);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    opacity: 0;
+    transition: all 0.8s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.3);
+    width: 100%;
+    max-width: 600px;
+    animation: neonBorder 2s infinite;
+  }
+
+  .profile-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px var(--primary-color);
+    border-color: var(--secondary-color);
+  }
+
+  @keyframes neonBorder {
+    0%, 100% { border-color: var(--primary-color); }
+    50% { border-color: var(--secondary-color); }
+  }
+
+  /* Kelas untuk animasi muncul */
+  .profile-card.visible {
+    opacity: 1;
+  }
+
+  /* Animasi spesifik berdasarkan kelas */
+  .profile-card.anim-fade-up {
+    transform: translateY(100px);
+  }
+  .profile-card.anim-fade-up.visible {
+    transform: translateY(0);
+  }
+
+  .profile-card.anim-slide-left {
+    transform: translateX(-100px);
+  }
+  .profile-card.anim-slide-left.visible {
+    transform: translateX(0);
+  }
+
+  .profile-card.anim-slide-right {
+    transform: translateX(100px);
+  }
+  .profile-card.anim-slide-right.visible {
+    transform: translateX(0);
+  }
+
+  .profile-card.anim-scale-up {
+    transform: scale(0.7);
+  }
+  .profile-card.anim-scale-up.visible {
+    transform: scale(1);
+  }
+
+  /* Styling gambar profil */
+  .profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-color);
+    filter: drop-shadow(0 0 12px var(--primary-color));
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .profile-card:hover .profile-img {
+    transform: rotate(5deg);
+  }
+
+  /* Styling konten profil */
+  .profile-content {
+    flex: 1;
+    text-align: left;
+  }
+
+  /* Styling nama profil dengan efek typewriter */
+  .profile-name {
+    font-size: 1.8em;
+    color: var(--primary-color);
+    margin: 0 0 10px;
+    text-shadow: 0 0 8px var(--primary-color), 0 0 15px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .profile-card.visible .profile-name {
+    animation: typewriter 1.5s steps(20) forwards;
+  }
+
+  @keyframes typewriter {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  /* Styling deskripsi profil */
+  .profile-desc {
+    font-size: 1em;
+    color: var(--secondary-color);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Partikel api untuk profil */
+  .profile-fire-particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, var(--secondary-color), var(--shadow-color));
+    border-radius: 50%;
+    pointer-events: none;
+    animation: textFireFlicker 1.2s ease-out forwards;
+    filter: drop-shadow(0 0 4px var(--primary-color));
+  }
+
+  /* Tombol ganti warna */
+  .color-switcher {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 30;
+    display: flex;
+    gap: 10px;
+  }
+
+  .color-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .color-btn:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px #fff;
+  }
+
+  .color-btn.green { background: #00ff88; }
+  .color-btn.red { background: #ff4d4d; }
+  .color-btn.blue { background: #4d94ff; }
+
+  /* Responsivitas */
+  @media (max-width: 768px) {
+    .profiles-container {
+      padding: 20px;
+      max-width: 90%;
+      margin: 50px auto;
+    }
+
+    .profile-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 15px;
+    }
+
+    .profile-img {
+      margin-right: 0;
+      margin-bottom: 15px;
+      width: 100px;
+      height: 100px;
+    }
+
+    .profile-content {
+      text-align: center;
+    }
+
+    .profile-name {
+      font-size: 1.5em;
+    }
+
+    .profile-desc {
+      font-size: 0.9em;
+    }
+
+    .color-switcher {
+      top: 10px;
+      right: 10px;
+      gap: 5px;
+    }
+
+    .color-btn {
+      width: 25px;
+      height: 25px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="background-fire"></div>
+<div class="background-objects">
+  <div class="glow-circle glow1"></div>
+  <div class="glow-circle glow2"></div>
+  <div class="glow-circle glow3"></div>
+</div>
+
+<div id="container">
+  <div id="fireworks-text" aria-label="Klik untuk animasi api dan kembang api">KOBE</div>
+</div>
+
+<div class="cursor" id="custom-cursor"></div>
+
+<div class="color-switcher">
+  <div class="color-btn green" data-color="green"></div>
+  <div class="color-btn red" data-color="red"></div>
+  <div class="color-btn blue" data-color="blue"></div>
+</div>
+
+<div class="profiles-container">
+  <div class="profile-card anim-fade-up">
+    <img src="https://via.placeholder.com/120" alt="Profile 1" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">John Doe</h2>
+      <p class="profile-desc">Web Developer with 5 years of experience in creating interactive animations.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-slide-left">
+    <img src="https://via.placeholder.com/120" alt="Profile 2" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Jane Smith</h2>
+      <p class="profile-desc">UI/UX Designer passionate about neon aesthetics and user-friendly interfaces.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-slide-right">
+    <img src="https://via.placeholder.com/120" alt="Profile 3" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Alex Johnson</h2>
+      <p class="profile-desc">Frontend Engineer specializing in JavaScript and CSS animations.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-scale-up">
+    <img src="https://via.placeholder.com/120" alt="Profile 4" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Emily Davis</h2>
+      <p class="profile-desc">Graphic Designer who loves creating vibrant, glowing visuals.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-fade-up">
+    <img src="https://via.placeholder.com/120" alt="Profile 5" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Michael Brown</h2>
+      <p class="profile-desc">Backend Developer with expertise in server-side rendering.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-slide-left">
+    <img src="https://via.placeholder.com/120" alt="Profile 6" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Sarah Wilson</h2>
+      <p class="profile-desc">Content Creator and animator with a focus on storytelling.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-slide-right">
+    <img src="https://via.placeholder.com/120" alt="Profile 7" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">David Lee</h2>
+      <p class="profile-desc">Full-Stack Developer skilled in modern web frameworks.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-scale-up">
+    <img src="https://via.placeholder.com/120" alt="Profile 8" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Laura Martinez</h2>
+      <p class="profile-desc">Motion Designer who brings static designs to life.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-fade-up">
+    <img src="https://via.placeholder.com/120" alt="Profile 9" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Chris Taylor</h2>
+      <p class="profile-desc">DevOps Engineer optimizing web performance and scalability.</p>
+    </div>
+  </div>
+  <div class="profile-card anim-slide-left">
+    <img src="https://via.placeholder.com/120" alt="Profile 10" class="profile-img">
+    <div class="profile-content">
+      <h2 class="profile-name">Anna White</h2>
+      <p class="profile-desc">Creative Director leading innovative web projects.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fireworksText = document.getElementById('fireworks-text');
+  const backgroundFire = document.querySelector('.background-fire');
+  const cursor = document.getElementById('custom-cursor');
+  const colorButtons = document.querySelectorAll('.color-btn');
+
+  // Split text into individual letters
+  fireworksText.innerHTML = fireworksText.textContent.split('').map(char => {
+    if (char === ' ') return '<span class="firework-letter"> </span>';
+    return `<span class="firework-letter">${char}</span>`;
+  }).join('');
+
+  // Intro animation for letters
+  const letters = fireworksText.querySelectorAll('.firework-letter');
+  letters.forEach((letter, i) => {
+    setTimeout(() => {
+      letter.classList.add('visible');
+    }, i * 100);
+  });
+
+  // Particle animation on hover
+  fireworksText.addEventListener('mousemove', e => {
+    if (!e.target.classList.contains('firework-letter')) return;
+    createParticle(e.clientX, e.clientY);
+  });
+
+  // Click animation (slide up + fireworks + exit)
+  fireworksText.addEventListener('click', () => {
+    if (fireworksText.classList.contains('transitioning')) return;
+
+    fireworksText.classList.add('transitioning');
+
+    // Fireworks for each letter
+    letters.forEach((letter, i) => {
+      setTimeout(() => {
+        explodeFirework(letter);
+      }, i * 150);
+    });
+
+    // Exit animation
+    setTimeout(() => {
+      letters.forEach((letter, i) => {
+        setTimeout(() => {
+          letter.style.opacity = 0;
+          letter.style.transform = 'translateY(100px) scale(0.5)';
+        }, i * 50);
+      });
+    }, 2000);
+
+    // Reset animation
+    setTimeout(() => {
+      fireworksText.classList.remove('transitioning');
+      letters.forEach(letter => {
+        letter.style.opacity = 0;
+        letter.style.transform = 'translateY(50px)';
+        setTimeout(() => {
+          letter.classList.add('visible');
+          letter.style.opacity = 1;
+          letter.style.transform = 'none';
+        }, 500);
+      });
+    }, 3000);
+  });
+
+  // Create firework explosion with sparkles
+  function explodeFirework(letter) {
+    const rect = letter.getBoundingClientRect();
+    const explode = document.createElement('div');
+    explode.classList.add('firework-explode');
+    explode.style.top = rect.top + rect.height / 2 + 'px';
+    explode.style.left = rect.left + rect.width / 2 + 'px';
+    document.body.appendChild(explode);
+
+    // Add sparkles
+    for (let i = 0; i < 8; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.setProperty('--sparkle-x', (Math.random() - 0.5) * 60 + 'px');
+      sparkle.style.setProperty('--sparkle-y', (Math.random() - 0.5) * 60 + 'px');
+      explode.appendChild(sparkle);
+    }
+
+    setTimeout(() => {
+      explode.remove();
+    }, 800);
+  }
+
+  // Create small fire particle
+  function createParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.setProperty('--x-move', (Math.random() - 0.5) * 30 + 'px');
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 1500);
+  }
+
+  // Create text fire particles
+  function createTextFireParticle(letter) {
+    const rect = letter.getBoundingClientRect();
+    const particle = document.createElement('div');
+    particle.classList.add('text-fire-particle');
+    particle.style.left = rect.left + rect.width / 2 + 'px';
+    particle.style.top = rect.top + rect.height / 2 + 'px';
+    particle.style.setProperty('--x-move', (Math.random() - 0.5) * 20 + 'px');
+    particle.style.setProperty('--y-move', (Math.random() - 0.5) * 20 + 'px');
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 1200);
+  }
+
+  // Create background fire particles across full screen
+  function createBackgroundFireParticle() {
+    const particle = document.createElement('div');
+    particle.classList.add('fire-particle');
+    const size = 15 + Math.random() * 40;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    const posX = Math.random() * window.innerWidth;
+    const posY = window.innerHeight - Math.random() * window.innerHeight;
+    particle.style.left = posX + 'px';
+    particle.style.top = posY + 'px';
+    particle.style.background = `radial-gradient(circle, rgba(255,255,255,0.95) 30%, var(--primary-color) 85%)`;
+    const duration = 2.5 + Math.random() * 2;
+    particle.style.animationDuration = duration + 's';
+    backgroundFire.appendChild(particle);
+
+    particle.addEventListener('animationend', () => particle.remove());
+  }
+  setInterval(createBackgroundFireParticle, 80);
+
+  // Generate fire particles around text continuously
+  setInterval(() => {
+    letters.forEach(letter => {
+      if (Math.random() < 0.3) {
+        createTextFireParticle(letter);
+      }
+    });
+  }, 100);
+
+  // Custom cursor
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Cursor click animation
+  window.addEventListener('mousedown', () => {
+    cursor.classList.add('click');
+  });
+  window.addEventListener('mouseup', () => {
+    cursor.classList.remove('click');
+  });
+
+  // Animasi saat scroll untuk profil
+  const profileCards = document.querySelectorAll('.profile-card');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+          startProfileFireParticles(entry.target);
+        }, index * 300);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.3
+  });
+
+  profileCards.forEach(card => {
+    observer.observe(card);
+  });
+
+  // Fungsi untuk membuat partikel api pada profil
+  function createProfileFireParticle(card) {
+    const rect = card.getBoundingClientRect();
+    const particle = document.createElement('div');
+    particle.classList.add('profile-fire-particle');
+    particle.style.left = rect.left + Math.random() * rect.width + 'px';
+    particle.style.top = rect.top + Math.random() * rect.height + 'px';
+    particle.style.setProperty('--x-move', (Math.random() - 0.5) * 20 + 'px');
+    particle.style.setProperty('--y-move', (Math.random() - 0.5) * 20 + 'px');
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 1200);
+  }
+
+  // Mulai animasi partikel untuk profil tertentu
+  function startProfileFireParticles(card) {
+    const interval = setInterval(() => {
+      if (!card.classList.contains('visible')) {
+        clearInterval(interval);
+        return;
+      }
+      if (Math.random() < 0.5) {
+        createProfileFireParticle(card);
+      }
+    }, 200);
+
+    setTimeout(() => {
+      clearInterval(interval);
+    }, 10000);
+  }
+
+  // Ganti warna tema
+  colorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const color = button.getAttribute('data-color');
+      let primaryColor, shadowColor, secondaryColor, backgroundGradient;
+      switch (color) {
+        case 'green':
+          primaryColor = '#00ff88';
+          shadowColor = '#006633';
+          secondaryColor = '#ccffcc';
+          backgroundGradient = 'linear-gradient(135deg, #1a3c34, #071a15)';
+          break;
+        case 'red':
+          primaryColor = '#ff4d4d';
+          shadowColor = '#660000';
+          secondaryColor = '#ff9999';
+          backgroundGradient = 'linear-gradient(135deg, #3c1a1a, #150707)';
+          break;
+        case 'blue':
+          primaryColor = '#4d94ff';
+          shadowColor = '#003366';
+          secondaryColor = '#99ccff';
+          backgroundGradient = 'linear-gradient(135deg, #1a2a3c, #071015)';
+          break;
+      }
+      document.documentElement.style.setProperty('--primary-color', primaryColor);
+      document.documentElement.style.setProperty('--shadow-color', shadowColor);
+      document.documentElement.style.setProperty('--secondary-color', secondaryColor);
+      document.documentElement.style.setProperty('--background-gradient', backgroundGradient);
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,2094 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GLIF | Centrum</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="../assets/images/Icon_accent.png">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            orangeAccent: '#FF5722',
+            darkBg: '#121212',
+            lightText: '#f8f9fa',
+            accentHover: '#E64A19',
+            cardBg: 'rgba(30, 30, 30, 0.7)',
+          },
+          backdropBlur: {
+            xs: '2px',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'fade-in': 'fadeIn 0.5s ease-out forwards',
+            'slide-in': 'slideIn 0.5s ease-out forwards',
+            'slide-up': 'slideUp 0.7s ease-out forwards',
+            'expand': 'expand 0.5s ease-out forwards',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideIn: {
+              '0%': { transform: 'translateX(-20px)', opacity: '0' },
+              '100%': { transform: 'translateX(0)', opacity: '1' },
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            expand: {
+              '0%': { transform: 'scale(0.95)', opacity: '0' },
+              '100%': { transform: 'scale(1)', opacity: '1' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    :root {
+      --dark-color: #001259;
+    }
+
+    @font-face {
+      font-family: NAURYZREDKEDS;
+      src: url(/assets/fonts/NAURYZREDKEDS.ttf);
+    }
+
+    @font-face {
+      font-family: SpaceGro;
+      src: url(/assets/fonts/SpaceGrotesk-Medium.ttf);
+    }
+
+    .font-nauryz {
+      font-family: NAURYZREDKEDS, sans-serif;
+    }
+
+    .font-space {
+      font-family: SpaceGro, sans-serif;
+    }
+
+    body {
+      font-family: 'SpaceGro';
+      background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+      /* background-image: url('assets/images/background.png'); */
+      background-attachment: fixed;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(255, 87, 34, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 85% 85%, rgba(255, 87, 34, 0.08) 0%, transparent 30%);
+      z-index: -1;
+    }
+
+    .btn-accent {
+      background: linear-gradient(90deg, #ff5722 0%, #ff7043 100%);
+      border: none;
+      color: white;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.3s ease;
+    }
+
+    .btn-accent::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 100%);
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    .btn-accent:hover::before {
+      left: 100%;
+    }
+
+    .btn-accent:hover {
+      box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .btn-nonactive {
+      transition: all 0.3s ease;
+    }
+
+    .btn-nonactive:hover {
+      /* box-shadow: 0 5px 15px rgba(255, 87, 34, 0.4); */
+      transform: translateY(-2px);
+    }
+
+    .menu-item {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .menu-item::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #FF5722;
+      transition: width 0.3s ease;
+    }
+
+    .menu-item:hover::after {
+      width: 100%;
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .animate-delay-100 {
+      animation-delay: 0.1s;
+    }
+
+    .animate-delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .animate-delay-300 {
+      animation-delay: 0.3s;
+    }
+
+    .animate-delay-400 {
+      animation-delay: 0.4s;
+    }
+
+    .animate-delay-100 {
+      animation-delay: 0.5s;
+    }
+
+    .glow-on-hover {
+      box-shadow: 0 0 0 0 rgba(255, 87, 34, 0);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .glow-on-hover:hover {
+      box-shadow: 0 0 10px 2px rgba(255, 87, 34, 0.4);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #FF5722;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E64A19;
+    }
+
+    .img-cover {
+      object-fit: cover;
+    }
+
+    /* Preloader */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #121212;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 3px solid transparent;
+      border-top-color: #FF5722;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Menu Animation */
+    @keyframes menuAnimation {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .menu-animation {
+      animation: menuAnimation 0.3s ease-out forwards;
+    }
+
+    /* Glassmorphism effect */
+    .glass-effect {
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+    }
+
+    /* Gradient overlay for images */
+    .gradient-overlay {
+      position: relative;
+    }
+
+    .gradient-overlay::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
+      border-radius: inherit;
+      z-index: 1;
+    }
+
+    .gradient-overlay>* {
+      position: relative;
+      z-index: 2;
+    }
+
+    #intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #001259;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 1s ease-in-out 2s forwards;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    #into-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: fadeOut 5s ease-in-out 5s forwards;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .video-wrapper {
+      scale: 0.6;
+      animation: bounceIn 1s ease-out;
+      will-change: transform;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+
+      20% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      90% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    .custom-snackbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #222;
+      color: #fff;
+      overflow: hidden;
+      z-index: 9998;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      font-family: SpaceGro, sans-serif;
+      font-size: 14px;
+      border-top: 2px solid #444;
+    }
+
+    .custom-snackbar-track {
+      white-space: nowrap;
+      display: inline-block;
+      animation: scroll-left 30s linear infinite;
+      padding-left: 100%;
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0%);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+
+    .glow-on-hover {
+      box-shadow: 0 0 0 0 rgba(255, 87, 34, 0);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .glow-on-hover:hover {
+      box-shadow: 0 0 10px 2px rgba(255, 87, 34, 0.4);
+    }
+
+    .shine-effect::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.3) 50%,
+          transparent 100%);
+      transition: all 0.5s ease;
+      z-index: -1;
+    }
+
+    .shine-effect:hover::before {
+      left: 100%;
+    }
+
+    @keyframes arrow-move-down {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(3px);
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .animate-arrow-move-down {
+      animation: arrow-move-down 1s infinite;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      80% {
+        transform: scale(0.98);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes bounceOut {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      20% {
+        transform: scale(1.05);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.7);
+      }
+    }
+
+    .animate-bounce-in {
+      animation: bounceIn 0.5s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+    }
+
+    .animate-bounce-out {
+      animation: bounceOut 0.4s cubic-bezier(.68, -0.55, .27, 1.55) forwards;
+    }
+
+    @keyframes menuAnimationOut {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+    }
+
+    .menu-animation-out {
+      animation: menuAnimationOut 0.3s ease-in forwards;
+    }
+  </style>
+</head>
+
+<body class="bg-darkBg text-lightText font-sans">
+  <!-- Preloader -->
+  <div id="intro-overlay">
+    <div id="intro_blur">
+      <div class="video-wrapper">
+        <video autoplay muted loop>
+          <source src="assets\videos\intro_video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snackbar -->
+  <div class="custom-snackbar">
+    <div class="custom-snackbar-track">
+      <span>Website Work In Progress • Semua yang tampil saat ini belum final dan akan berubah dikemudian hari.</span>
+    </div>
+  </div>
+
+
+  <!-- Header -->
+  <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 font-space">
+    <div class="flex justify-between items-center px-6 py-4 transition-all duration-500">
+      <div class="relative">
+        <a href="#home" class="flex items-center space-x-2 group">
+          <div
+            class="h-12 w-12 rounded-full flex items-center justify-center overflow-hidden shadow-lg shadow-orangeAccent/20 group-hover:shadow-orangeAccent/40 transition-all duration-300">
+            <img src="assets/images/g_accent.png" alt="G Logo" class="w-full h-full object-contain">
+          </div>
+        </a>
+      </div>
+      <nav>
+        <button id="menu-toggle"
+          class="text-lightText hover:text-orangeAccent focus:outline-none transition-transform duration-300 transform hover:scale-110 p-2 rounded-full"
+          aria-label="Toggle menu">
+          <i class="bi bi-list text-3xl"></i>
+        </button>
+        <div id="menu" class="bg-black absolute right-4 top-20 p-5 rounded-xl space-y-4 hidden">
+          <a href="#home"
+            class="menu-item flex items-center space-x-3 text-lightText hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-house-door-fill"></i>
+            <span>Home</span>
+          </a>
+          <a href="#anggota"
+            class="menu-item flex items-center space-x-3 text-lightText hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-people-fill"></i>
+            <span>Anggota</span>
+          </a>
+          <a href="#event"
+            class="menu-item flex items-center space-x-3 text-lightText hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-calendar-event-fill"></i>
+            <span>Event</span>
+          </a>
+          <a href="#glifyour"
+            class="menu-item flex items-center space-x-3 text-lightText hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-link-45deg"></i>
+            <span>Glif Your</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-0 space-y-32">
+    <!-- Home Section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-4 py-16 font-space">
+      <div class="animate-float">
+        <div
+          class="relative w-96 pb-[56.25%] rounded-full bg-gradient-to-br flex items-center justify-center shadow-lg shadow-orangeAccent/20 mb-1 mx-auto">
+        </div>
+        <img src="assets/images/glif_accent.png" alt="GLIF Logo"
+          class="absolute top-0 left-0 w-full h-full object-contain">
+      </div>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-bold mt-6 mb-4 opacity-0 animate-slide-up animate-delay-100">Be Bold, Unfold
+      </h1>
+
+      <p class="text-lg text-gray-300 mb-8 max-w-md mx-auto opacity-0 animate-slide-up animate-delay-200">
+        Kamu lebih dari yang kamu pikirkan. Kami adalah wadah untuk kamu yang ingin berkontribusi lebih untuk diri
+        sendiri dan orang lain. Bergabunglah dengan kami di GLIF, tempat di mana kamu bisa menjadi versi terbaik dari
+        dirimu.
+      </p>
+
+      <div class="flex justify-center space-x-6 mb-10 opacity-0 animate-slide-up animate-delay-300">
+        <!-- <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-twitter text-xl"></i>
+          </a> -->
+        <a href="https://www.instagram.com/glideinside"
+          class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+          <i class="bi bi-instagram text-xl"></i>
+        </a>
+        <!-- <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-github text-xl"></i>
+          </a> -->
+        <!-- <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+            <i class="bi bi-linkedin text-xl"></i>
+          </a> -->
+      </div>
+
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-lg mx-auto opacity-0 animate-slide-up animate-delay-400">
+        <a href="https://forms.gle/P2Cz79JQYtek1Y7H7"
+          class="btn-accent flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2">
+          <i class="bi bi-send-fill"></i>
+          <span>Submission : Next G</span>
+        </a>
+
+        <a id="agen-balon-btn"
+          class="cursor-pointer btn-accent flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2">
+          <i class="bi bi-person-fill"></i>
+          <span>Changelog</span>
+        </a>
+
+        <!-- <a href="#" class="btn-accent flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2 glow-on-hover">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>Dokumentasi</span>
+          </a>
+
+          <a href="#" class="btn-accent flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2 glow-on-hover">
+            <i class="bi bi-file-earmark-text"></i>
+            <span>Dokumentasi</span>
+          </a> -->
+
+      </div>
+
+      <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#anggota" class="text-gray-400 hover:text-orangeAccent">
+          <i class="bi bi-chevron-down text-2xl"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- Anggota Section -->
+    <section id="anggota" class="px-4 py-16 relative font-space">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-2 relative inline-block">
+          <span class="relative z-10">Anggota Glif Inside</span>
+          <span class="absolute -bottom-2 left-0 w-full h-1 bg-orangeAccent rounded-full"></span>
+        </h2>
+        <p class="pt-3 text-gray-400 max-w-xl mx-auto">Kami berjalan sebagai tim.</p>
+      </div>
+
+      <div id="anggota-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1JVl8LMOohrXHnfNHlqTFrTvw8ZBGWaVy&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1UJwjkALnYVymlinbIx7h_ynjHx2MRH6C&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1I0ccHH_1Q03w1ThmJpoGUgqEZHtqJPUf&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Budi Santoso</h3>
+                <p class="text-gray-300">Marketing Director</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1uQB7ixh1ai6qQnO_6YU7mcyEZwXbJToV&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Dina Putri</h3>
+                <p class="text-gray-300">UI/UX Designer</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1dv4oheV6u-YXoBL0z8aQVNwwjixUAuXN&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Rudi Hartono</h3>
+                <p class="text-gray-300">Backend Developer</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=18Jx3yQykRYSYoCPVY64tu9bNnU791Lnw&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1khenXHfXfFgFCf80kXgJhUXV8fqAvP2w&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1PJj95Yt8wx-N4Qai3wIBaJTcICGBVb6W&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1UTUd9lxJhjkXgOBt-Vz0dnWh3vrGgy6w&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1Ixl9fPYaiOkoX-CO_DF5lDhvJfF7T8Bq&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1f3DCdKDj9fIIUDcFHprSQ2qifF-4wKpj&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1sPOnc0MLPuoNvhHWzRXpL9B6lqiyUIFs&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1zi41rDyn_PoqFJ8faWcC2dNffwm061QG&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1SxLQ1Novlhboxw9qYNHj0bA8U1g2WQtU&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1hj79N1crfTtasrfMFDaP1is5SMaKQ10m&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1w66ssHnlPRJm8DgcopxxkOg-olmQGBl4&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1YyXuLceJxD0z0dEPd7QJg689GAh-Wkpd&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1P0Krf4iI6uWE3ISMv3DS2j_EjldibUTQ&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1M63B--xyaXtowupFa8Rn9XSR7X8cEpSE&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1daoHL2I3xRl10nEgbR8VSH5lePW3duN5&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1eT8kmIhDqGc-etzS-g52z6NcPTuSfmGw&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1BMDa7PwddSETNqAJR3ZMt9s9uSRo4U21&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1kXRObn7RUoFgQuzZFu4JnS7NhQ1zkqWj&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1GDQxfYa3341rk4-eHBPWr6mOFlssj-YF&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1YuJqI9Ua--hXjcuKdvSM5Dfa0qzKehzY&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=17RWjqd03oEqJjGAAH5TKY67pAcCMRGfS&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1HVjJHO5aL00pZK3nZHQkcfA7MuZOKyP4&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1PUJVQQwtmxuaAtmKXFK1Xj2ru0Jn75_0&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="anggota-card glass-effect overflow-hidden rounded-xl shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+          <div class="gradient-overlay relative">
+            <img src="https://drive.google.com/thumbnail?id=1D6Xcs97o-uRq4aCJh0ESOP5x6zDZRm9Z&sz=w1000" alt="Anggota"
+              class="w-full h-100 object-cover" />
+            <!-- <div class="absolute bottom-0 left-0 w-full p-4 text-left">
+                <h3 class="font-bold text-xl">Maya Indah</h3>
+                <p class="text-gray-300">Customer Support</p>
+              </div> -->
+          </div>
+          <div class="p-4 flex justify-center space-x-4">
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-twitter"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-envelope"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="show-all-anggota" class="cursor-pointer mt-8 text-center opacity-0 animate-fade-in animate-delay-400">
+        <a id="toggle-anggota-btn"
+          class="btn-accent inline-flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2">
+          <span class="flex -space-x-3">
+            <img src="https://drive.google.com/thumbnail?id=1dv4oheV6u-YXoBL0z8aQVNwwjixUAuXN&sz=w1000"
+              class="w-9 h-9 rounded-full object-cover" alt="Avatar" />
+            <img src="https://drive.google.com/thumbnail?id=18Jx3yQykRYSYoCPVY64tu9bNnU791Lnw&sz=w1000"
+              class="w-9 h-9 rounded-full object-cover" alt="Avatar" />
+            <img src="https://drive.google.com/thumbnail?id=1khenXHfXfFgFCf80kXgJhUXV8fqAvP2w&sz=w1000"
+              class="w-9 h-9 rounded-full shadow object-cover" alt="Avatar" />
+            <img src="https://drive.google.com/thumbnail?id=1PJj95Yt8wx-N4Qai3wIBaJTcICGBVb6W&sz=w1000"
+              class="w-9 h-9 rounded-full shadow object-cover" alt="Avatar" />
+          </span>
+          <!-- Teks -->
+          <span id="toggle-anggota-text" class="transition-all duration-200">
+            Lihat Semua Anggota
+          </span>
+          <!-- Icon Arrow Kanan dengan animasi -->
+          <span id="toggle-anggota-icon" class="relative flex items-center">
+            <i class="bi bi-arrow-down text-xl animate-arrow-move-down"></i>
+          </span>
+        </a>
+      </div>
+
+      <div class="text-center">
+        <p class="pt-3 text-gray-400 max-w-xl mx-auto">Last updated : 17/05/25 11:35</p>
+      </div>
+    </section>
+
+    <!-- Event Section -->
+    <section id="event" class="px-4 py-16 relative font-space">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold mb-2 relative inline-block">
+          <span class="relative z-10">Event</span>
+          <span class="absolute -bottom-2 left-0 w-full h-1 bg-orangeAccent rounded-full"></span>
+        </h2>
+        <p class="pt-3 text-gray-400 max-w-xl mx-auto">Event gokil-gokilan</p>
+      </div>
+
+      <div class="max-w-6xl mx-auto">
+        <div class="relative overflow-hidden">
+          <!-- Event Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              class="glass-effect rounded-xl overflow-hidden shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+              <div class="gradient-overlay relative">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTpESVj2NZPjFFqcZjIwxsCA7VZeFb5RwE6g&s"
+                  alt="Event 1" class="w-full h-48 object-cover" />
+                <div
+                  class="absolute top-4 left-4 bg-orangeAccent px-3 py-1 rounded-full text-sm font-medium text-[var(--dark-color)]">
+                  <i class="bi bi-calendar-check me-1"></i> 15 Mei 2025
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-bold text-xl mb-2">Judge Bersama Keluarga Besar</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                  Nilai bersama, adil, dan mufakat.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-orangeAccent font-medium">
+                    <i class="bi bi-geo-alt me-1"></i> G. People Sound
+                  </span>
+                  <!-- <a href="#" class="text-sm font-medium hover:text-orangeAccent transition-colors duration-300 flex items-center">
+                      Daftar <i class="bi bi-arrow-right ms-1"></i>
+                    </a> -->
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glass-effect rounded-xl overflow-hidden shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+              <div class="gradient-overlay relative">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR18pBhn3czaXKbe4dQ_weIEIezlunJVaK9YQ&s"
+                  alt="Event 2" class="w-full h-48 object-cover" />
+                <div
+                  class="absolute top-4 left-4 bg-orangeAccent px-3 py-1 rounded-full text-sm font-medium text-[var(--dark-color)]">
+                  <i class="bi bi-calendar-check me-1"></i> 22 Juli 2025
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-bold text-xl mb-2">Bazzar Jualan Es</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                  Kalo yang jualan balon disamping, kita jualan es.
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-orangeAccent font-medium">
+                    <i class="bi bi-geo-alt me-1"></i> Jakarta
+                  </span>
+                  <!-- <a href="#" class="text-sm font-medium hover:text-orangeAccent transition-colors duration-300 flex items-center">
+                      Daftar <i class="bi bi-arrow-right ms-1"></i>
+                    </a> -->
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="glass-effect rounded-xl overflow-hidden shadow-lg card-hover opacity-0 animate-fade-in animate-delay-100 shine-effect">
+              <div class="gradient-overlay relative">
+                <img src="https://radarlambar.bacakoran.co/upload/051ef24b5d6438f4adc93651295e1ace.jpg" alt="Event 3"
+                  class="w-full h-48 object-cover" />
+                <div
+                  class="absolute top-4 left-4 bg-orangeAccent px-3 py-1 rounded-full text-sm font-medium text-[var(--dark-color)]">
+                  <i class="bi bi-calendar-check me-1"></i> 17 Agustus 2025
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="font-bold text-xl mb-2">Hidup [REDACTED]</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                  Merdeka! Merdeka! Merdeka!
+                </p>
+                <div class="flex justify-between items-center">
+                  <span class="text-orangeAccent font-medium">
+                    <i class="bi bi-geo-alt me-1"></i> Istana Presiden
+                  </span>
+                  <a href="#" onclick="showToast('Berhasil kirim pesan ke Presiden', 'success'); return false;"
+                    class="text-sm font-medium hover:text-orangeAccent transition-colors duration-300 flex items-center">
+                    Daftar <i class="bi bi-arrow-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- See All Events Button -->
+          <div class="mt-8 text-center opacity-0 animate-fade-in animate-delay-400">
+            <a href="#" onclick="showToast('Belum ada ya.. sabar', 'info'); return false;"
+              class="btn-accent inline-flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2">
+              <span>Lihat Semua Event</span>
+              <i class="bi bi-arrow-right ms-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Glif Your Section -->
+    <section id="glifyour" class="px-4 py-16 relative font-space">
+      <div class="max-w-4xl mx-auto glass-effect p-8 rounded-2xl opacity-0 animate-expand animate-delay-100">
+        <div class="text-center">
+          <div class="inline-block bg-gradient-to-br  p-4 rounded-full mb-6">
+            <img src="assets/images/g_accent.png" alt="G Logo" class="w-12 h-12 object-contain">
+          </div>
+          <h2 class="text-3xl font-bold mb-4">Glify kan profile mu.</h2>
+          <p class="text-gray-300 mb-8 max-w-lg mx-auto">
+            Personalisasi profile Anda dengan tema unik dari Glif Studio yang didesain oleh anggota kami.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="https://glif-yours.vercel.app" target="_blank"
+              class="btn-accent flex items-center justify-center px-6 py-3 rounded-full text-white space-x-2 w-full sm:w-auto">
+              <i class="bi bi-box-arrow-up-right me-2"></i>
+              <span>Mulai Sekarang</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-10 font-space">
+          <div class="glass-effect p-6 rounded-xl text-center opacity-0 animate-fade-in animate-delay-200">
+            <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-orangeAccent/20 mb-4 mx-auto">
+              <i class="bi bi-people-fill text-2xl text-orangeAccent"></i>
+            </div>
+            <h3 class="text-3xl font-bold mb-2 text-white counter" data-target="15000">0</h3>
+            <p class="text-gray-400">Pengguna Aktif</p>
+          </div>
+          
+          <div class="glass-effect p-6 rounded-xl text-center opacity-0 animate-fade-in animate-delay-300">
+            <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-orangeAccent/20 mb-4 mx-auto">
+              <i class="bi bi-link text-2xl text-orangeAccent"></i>
+            </div>
+            <h3 class="text-3xl font-bold mb-2 text-white counter" data-target="1250000">0</h3>
+            <p class="text-gray-400">Link Terbuat</p>
+          </div>
+          
+          <div class="glass-effect p-6 rounded-xl text-center opacity-0 animate-fade-in animate-delay-400">
+            <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-orangeAccent/20 mb-4 mx-auto">
+              <i class="bi bi-bar-chart-fill text-2xl text-orangeAccent"></i>
+            </div>
+            <h3 class="text-3xl font-bold mb-2 text-white counter" data-target="99.9">0</h3>
+            <p class="text-gray-400">Uptime (%)</p>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- FAQ Section -->
+      <!-- <section id="faq" class="px-4 py-16 relative font-space">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-2 relative inline-block">
+            <span class="relative z-10">FAQ</span>
+            <span class="absolute -bottom-2 left-0 w-full h-1 bg-orangeAccent rounded-full"></span>
+          </h2>
+          <p class="text-gray-400 max-w-xl mx-auto">Pertanyaan yang sering ditanyakan tentang layanan kami.</p>
+        </div>
+        
+        <div class="max-w-3xl mx-auto glass-effect p-6 rounded-xl">
+          <div class="space-y-4">
+            <div class="faq-item">
+              <button class="faq-question w-full text-left p-4 flex justify-between items-center bg-cardBg rounded-lg hover:bg-orangeAccent/20 transition-colors duration-300">
+                <span class="font-semibold">Apa itu layanan GLIF?</span>
+                <i class="bi bi-plus-lg faq-icon transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer p-4 hidden mt-2 text-gray-400 rounded-lg bg-cardBg/50">
+                Layanan GLIF adalah platform yang memungkinkan Anda mempersingkat URL panjang menjadi tautan yang lebih pendek dan mudah diingat. Ini juga memungkinkan Anda melacak klik dan engagement pada tautan tersebut.
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question w-full text-left p-4 flex justify-between items-center bg-cardBg rounded-lg hover:bg-orangeAccent/20 transition-colors duration-300">
+                <span class="font-semibold">Apakah layanan ini gratis?</span>
+                <i class="bi bi-plus-lg faq-icon transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer p-4 hidden mt-2 text-gray-400 rounded-lg bg-cardBg/50">
+                Kami menawarkan paket gratis dengan fitur dasar dan paket premium dengan fitur tambahan seperti analitik lanjutan, kustomisasi tautan, dan pengalihan cerdas. Detail lebih lanjut dapat dilihat di halaman pricing.
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question w-full text-left p-4 flex justify-between items-center bg-cardBg rounded-lg hover:bg-orangeAccent/20 transition-colors duration-300">
+                <span class="font-semibold">Apakah tautan saya aman?</span>
+                <i class="bi bi-plus-lg faq-icon transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer p-4 hidden mt-2 text-gray-400 rounded-lg bg-cardBg/50">
+                Ya, semua tautan dilindungi dengan enkripsi SSL dan kami memindai tautan untuk mendeteksi konten berbahaya atau malware. Keamanan adalah prioritas utama kami.
+              </div>
+            </div>
+            
+            <div class="faq-item">
+              <button class="faq-question w-full text-left p-4 flex justify-between items-center bg-cardBg rounded-lg hover:bg-orangeAccent/20 transition-colors duration-300">
+                <span class="font-semibold">Berapa lama tautan saya aktif?</span>
+                <i class="bi bi-plus-lg faq-icon transition-transform duration-300"></i>
+              </button>
+              <div class="faq-answer p-4 hidden mt-2 text-gray-400 rounded-lg bg-cardBg/50">
+                Untuk pengguna gratis, tautan akan aktif selama 60 hari. Untuk pengguna premium, tautan akan aktif secara permanen selama akun Anda aktif.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> -->
+
+      <!-- Newsletter Section -->
+      <!-- <section id="newsletter" class="px-4 py-16 relative font-space">
+        <div class="max-w-4xl mx-auto glass-effect p-8 rounded-2xl relative overflow-hidden">
+          //Abstract gradient background
+          <div class="absolute inset-0 z-0 opacity-20">
+            <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-orangeAccent/30 filter blur-3xl"></div>
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-orangeAccent/20 filter blur-3xl"></div>
+          </div>
+          
+          <div class="relative z-10 text-center">
+            <div class="inline-block bg-gradient-to-br from-orangeAccent to-accentHover p-4 rounded-full mb-6">
+              <i class="bi bi-envelope-fill text-2xl text-white"></i>
+            </div>
+            <h2 class="text-3xl font-bold mb-4">Dapatkan Update Terbaru</h2>
+            <p class="text-gray-300 mb-8 max-w-lg mx-auto">
+              Berlangganan newsletter kami untuk mendapatkan tips, trik, dan berita terbaru seputar digital marketing dan GLIF.
+            </p>
+            
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input type="email" placeholder="Email anda..." class="flex-grow px-4 py-3 bg-darkBg/40 rounded-full border border-gray-700 focus:border-orangeAccent focus:ring-2 focus:ring-orangeAccent/50 focus:outline-none transition-all duration-300" required>
+              <button type="submit" class="btn-accent py-3 px-6 rounded-full text-white flex items-center justify-center">
+                Subscribe <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </form>
+            <p class="text-sm text-gray-500 mt-4">Kami tidak akan pernah membagikan email Anda. Lihat kebijakan privasi kami.</p>
+          </div>
+        </div>
+      </section> -->
+  </main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed bottom-12 right-4 z-9999 flex flex-col-reverse gap-2"></div>
+  <!-- Toasts will be dynamically added here -->
+  </div>
+
+  <!-- Popup Changelog -->
+  <div id="changelog-popup-overlay"
+    class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center transition-all duration-300 opacity-0 pointer-events-none">
+    <div id="changelog-popup"
+      class="relative glass-effect rounded-2xl shadow-lg p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto text-left animate-bounce-in">
+      <!-- Close Button -->
+      <button id="close-changelog-popup"
+        class="absolute top-3 right-3 text-gray-400 hover:text-orangeAccent text-2xl focus:outline-none">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <h3 class="font-nauryz text-2xl mb-4 text-orangeAccent">Changelog Website</h3>
+      <ul class="list-disc pl-5 space-y-2 text-gray-200 font-space">
+        <li>17 Mei 2025: Penambahan fitur popup changelog dan toggle anggota. Hanya menampilkan 4 anggota saja agar
+          tidak menambahkan lag saat pertama kali membuka website, untuk menampilkan semua klik tombol "Lihat Semua
+          Anggota"</li>
+        <li>16 Mei 2025: Perbaikan animasi tombol dan grid anggota.</li>
+        <li>15 Mei 2025: Penambahan event baru dan update tampilan.</li>
+        <li>14 Mei 2025: Rilis awal website GLIF Centrum.</li>
+      </ul>
+    </div>
+  </div>
+
+
+
+  <!-- Footer -->
+  <footer class="px-4 py-10 border-t border-gray-800 font-space">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1 md:col-span-2">
+          <a href="#home" class="flex items-center space-x-2 group mb-4">
+            <div
+              class="h-10 w-10 rounded-full bg flex items-center justify-center overflow-hidden shadow-lg shadow-orangeAccent/20 group-hover:shadow-orangeAccent/40 transition-all duration-300">
+              <img src="assets/images/glif_accent.png" alt="G Logo" class="w-24 h-24 object-contain">
+            </div>
+
+          </a>
+          <p class="text-gray-400 mb-4">
+            Komunitan inklusif dan ekslusif yang berfokus pada pengembangan diri dan kolaborasi.
+          </p>
+          <div class="flex space-x-4">
+            <!-- <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+                <i class="bi bi-twitter text-xl"></i>
+              </a> -->
+            <a href="https://www.instagram.com/glideinside"
+              class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+              <i class="bi bi-instagram text-xl"></i>
+            </a>
+            <!-- <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+                <i class="bi bi-github text-xl"></i>
+              </a> -->
+            <!-- <a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">
+                <i class="bi bi-linkedin text-xl"></i>
+              </a> -->
+          </div>
+        </div>
+
+        <!-- <div>
+            <h3 class="font-bold text-lg mb-4">Layanan</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">GLIF</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">Analytics</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">Custom Domain</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">QR Code</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-lg mb-4">Perusahaan</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">Tentang Kami</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">Karir</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">Blog</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-orangeAccent transition-colors duration-300">Kontak</a></li>
+            </ul>
+          </div>
+        </div> -->
+
+        <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div>
+            &copy;
+            <span id="copyright">
+              <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+            </span>
+            Glif - GlideFrame
+            </br> Powered by OpenStudio
+          </div>
+          <!-- <div class="flex space-x-4 mt-4 md:mt-0">
+            <a href="#" class="text-gray-500 hover:text-orangeAccent text-sm transition-colors duration-300">Syarat & Ketentuan</a>
+            <a href="#" class="text-gray-500 hover:text-orangeAccent text-sm transition-colors duration-300">Kebijakan Privasi</a>
+          </div> -->
+        </div>
+      </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top"
+    class="fixed bottom-12 z-50 right-8 w-12 h-12 rounded-full bg-orangeAccent text-white opacity-0 invisible transition-all duration-300 focus:outline-none group hover:w-36 overflow-hidden flex items-center justify-center"
+    onmouseover="this.classList.add('show-text')" onmouseout="this.classList.remove('show-text')">
+    <i class="bi bi-arrow-up text-xl transition-all duration-300 group-hover:mr-2 show-text:mr-2"></i>
+    <span
+      class="font-space transition-all duration-300 whitespace-nowrap w-0 opacity-0 group-hover:w-auto group-hover:opacity-100 show-text:w-auto show-text:opacity-100">
+      Back to top
+    </span>
+  </button>
+  <script>
+    // Show text on hover only for #back-to-top
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('mouseenter', () => {
+        backToTopBtn.classList.add('show-text');
+      });
+      backToTopBtn.addEventListener('mouseleave', () => {
+        backToTopBtn.classList.remove('show-text');
+      });
+    }
+  </script>
+  <style>
+    /* Utility for show-text state */
+    #back-to-top.show-text span {
+      width: auto !important;
+      opacity: 1 !important;
+    }
+
+    #back-to-top.show-text i {
+      margin-right: 0.5rem !important;
+    }
+  </style>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- POPUP -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const popupOverlay = document.getElementById('changelog-popup-overlay');
+      const closeBtn = document.getElementById('close-changelog-popup');
+      const agenBtn = document.getElementById('agen-balon-btn');
+      const popup = document.getElementById('changelog-popup');
+
+      if (agenBtn) {
+        agenBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          popupOverlay.classList.remove('opacity-0', 'pointer-events-none');
+          popupOverlay.classList.add('opacity-100');
+          popup.classList.remove('animate-bounce-out');
+          popup.classList.add('animate-bounce-in');
+        });
+      }
+
+      // Close popup with X
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+          popup.classList.remove('animate-bounce-in');
+          popup.classList.add('animate-bounce-out');
+          setTimeout(() => {
+            popupOverlay.classList.add('opacity-0', 'pointer-events-none');
+            popupOverlay.classList.remove('opacity-100');
+          }, 400); // match bounceOut duration
+        });
+      }
+
+      // Close popup by clicking outside
+      if (popupOverlay) {
+        popupOverlay.addEventListener('mousedown', function (e) {
+          if (e.target === this) {
+            popup.classList.remove('animate-bounce-in');
+            popup.classList.add('animate-bounce-out');
+            setTimeout(() => {
+              popupOverlay.classList.add('opacity-0', 'pointer-events-none');
+              popupOverlay.classList.remove('opacity-100');
+            }, 400);
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- SHOW ALL -->
+  <script>
+    // Tampilkan hanya 4 anggota pertama, toggle tampil semua/perkecil
+    document.addEventListener('DOMContentLoaded', function () {
+      const cards = document.querySelectorAll('.anggota-card');
+      const showAllBtn = document.getElementById('show-all-anggota');
+      const toggleBtn = document.getElementById('toggle-anggota-btn');
+      const toggleText = document.getElementById('toggle-anggota-text');
+      const toggleIcon = document.getElementById('toggle-anggota-icon');
+      let expanded = false;
+
+      function showFirstFour() {
+        cards.forEach((card, i) => {
+          card.style.display = i < 4 ? '' : 'none';
+        });
+        toggleText.textContent = 'Lihat Semua Anggota';
+        toggleIcon.innerHTML = '<i class="bi bi-arrow-down text-xl animate-arrow-move-down"></i>';
+        expanded = false;
+      }
+
+      function showAll() {
+        cards.forEach(card => card.style.display = '');
+        toggleText.textContent = 'Perkecil';
+        toggleIcon.innerHTML = '<i class="bi bi-arrow-up text-xl"></i>';
+        expanded = true;
+      }
+
+      if (cards.length <= 4) {
+        showAllBtn.style.display = 'none';
+      } else {
+        showFirstFour();
+        toggleBtn.addEventListener('click', function () {
+          if (expanded) {
+            showFirstFour();
+          } else {
+            showAll();
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- TOAST -->
+  <script>
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+
+      // Enhanced base classes with smoother transitions
+      const baseClasses = 'max-w-xs px-4 py-3 rounded-lg shadow-lg transform transition-all duration-500 ease-in-out flex items-center gap-2 glass-effect opacity-0 scale-95';
+      const typeClasses = {
+        success: 'border-l-4 border-green-500',
+        error: 'border-l-4 border-red-500',
+        warning: 'border-l-4 border-yellow-500',
+        info: 'border-l-4 border-orangeAccent'
+      };
+
+      toast.className = `${baseClasses} ${typeClasses[type]} translate-x-full`;
+
+      const icons = {
+        success: 'bi-check-circle-fill text-green-500',
+        error: 'bi-x-circle-fill text-red-500',
+        warning: 'bi-exclamation-circle-fill text-yellow-500',
+        info: 'bi-info-circle-fill text-orangeAccent'
+      };
+
+      toast.innerHTML = `
+        <i class="bi ${icons[type]}"></i>
+        <span class="text-sm font-space">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      // Smooth enter animation with multiple properties
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-x-full', 'opacity-0', 'scale-95');
+        toast.classList.add('translate-x-0', 'opacity-100', 'scale-100');
+      });
+
+      // Smooth exit animation
+      setTimeout(() => {
+        toast.classList.add('translate-x-full', 'opacity-0', 'scale-95');
+        toast.classList.remove('translate-x-0', 'opacity-100', 'scale-100');
+
+        // Remove element after animation completes
+        setTimeout(() => {
+          container.removeChild(toast);
+        }, 500); // Match duration-500
+      }, 3000);
+    }
+
+    // Example usage:
+    // showToast('Operation successful!', 'success');
+    // showToast('Something went wrong!', 'error');
+    // showToast('Please be careful!', 'warning');
+    // showToast('Just letting you know...', 'info');
+  </script>
+
+  <script>
+    // Preloader 
+    window.addEventListener('load', function () {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 500);
+      }, 500);
+
+      // Initialize counters
+      initCounters();
+    });
+
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        navbar.classList.add('backdrop-blur-md', 'bg-darkBg/70', 'py-2');
+        navbar.classList.remove('py-4');
+        backToTop.classList.remove('opacity-0', 'invisible');
+      } else {
+        navbar.classList.remove('backdrop-blur-md', 'bg-darkBg/70', 'py-2');
+        navbar.classList.add('py-4');
+        backToTop.classList.add('opacity-0', 'invisible');
+      }
+    });
+
+    // Menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('menu');
+
+    menuToggle.addEventListener('click', () => {
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden', 'menu-animation-out');
+        menu.classList.add('menu-animation');
+      } else {
+        menu.classList.remove('menu-animation');
+        menu.classList.add('menu-animation-out');
+        setTimeout(() => {
+          menu.classList.add('hidden');
+          menu.classList.remove('menu-animation-out');
+        }, 300); // match animation duration
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !menuToggle.contains(e.target) && !menu.classList.contains('hidden')) {
+        menu.classList.remove('menu-animation');
+        menu.classList.add('menu-animation-out');
+        setTimeout(() => {
+          menu.classList.add('hidden');
+          menu.classList.remove('menu-animation-out');
+        }, 300);
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !menuToggle.contains(e.target) && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          menu.classList.add('hidden');
+        }
+      });
+    });
+
+    // Back to top button
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('opacity-0');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-expand').forEach(el => {
+      observer.observe(el);
+    });
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+
+      // Add z-index to ensure toast appears above back-to-top button
+      container.style.zIndex = '9999';
+
+      const baseClasses = 'max-w-xs px-4 py-3 rounded-lg shadow-lg transform transition-all duration-300 flex items-center gap-2 glass-effect';
+      const typeClasses = {
+        success: 'border-l-4 border-green-500',
+        error: 'border-l-4 border-red-500',
+        warning: 'border-l-4 border-yellow-500',
+        info: 'border-l-4 border-orangeAccent'
+      };
+
+      toast.className = `${baseClasses} ${typeClasses[type]} translate-y-full`;
+
+      const icons = {
+        success: 'bi-check-circle-fill text-green-500',
+        error: 'bi-x-circle-fill text-red-500',
+        warning: 'bi-exclamation-circle-fill text-yellow-500',
+        info: 'bi-info-circle-fill text-orangeAccent'
+      };
+
+      toast.innerHTML = `
+        <i class="bi ${icons[type]}"></i>
+        <span class="text-sm font-space">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-full');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-full', 'opacity-0');
+        setTimeout(() => {
+          container.removeChild(toast);
+        }, 300);
+      }, 3000);
+    }
+
+    // FAQ accordion
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('.faq-icon');
+
+        answer.classList.toggle('hidden');
+        icon.classList.toggle('rotate-45');
+
+        faqQuestions.forEach(otherQuestion => {
+          if (otherQuestion !== question) {
+            const otherAnswer = otherQuestion.nextElementSibling;
+            const otherIcon = otherQuestion.querySelector('.faq-icon');
+            otherAnswer.classList.add('hidden');
+            otherIcon.classList.remove('rotate-45');
+          }
+        });
+      });
+    });
+
+    // Counter animation functions
+    function initCounters() {
+      const counters = document.querySelectorAll('.counter');
+      const speed = 200;
+
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const increment = target / speed;
+
+        const updateCount = () => {
+          if (count < target) {
+            count += increment;
+            counter.innerText = formatNumber(Math.ceil(count));
+            setTimeout(updateCount, 1);
+          } else {
+            counter.innerText = formatNumber(target);
+          }
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+            updateCount();
+            counterObserver.unobserve(counter);
+          }
+        });
+
+        counterObserver.observe(counter);
+      });
+    }
+
+    function formatNumber(num) {
+      if (num % 1 !== 0) {
+        return num.toFixed(1);
+      }
+      return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+  </script>
+</body>
+
+</html>
