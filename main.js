@@ -129,14 +129,14 @@ document.addEventListener('DOMContentLoaded', () => {
     profileCards.forEach(card => profileObserver.observe(card));
 
     // Profile Popup
-    profileCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.details-toggle') || e.target.closest('.profile-social a')) return;
-            const popup = createProfilePopup(card);
-            document.body.appendChild(popup);
-            setTimeout(() => popup.classList.add('active'), 10);
-        });
-    });
+    // profileCards.forEach(card => {
+    //     card.addEventListener('click', (e) => {
+    //         if (e.target.closest('.details-toggle') || e.target.closest('.profile-social a')) return;
+    //         const popup = createProfilePopup(card);
+    //         document.body.appendChild(popup);
+    //         setTimeout(() => popup.classList.add('active'), 10);
+    //     });
+    // });
 
     function createProfilePopup(card) {
         const popup = document.createElement('div');
@@ -440,15 +440,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     profileCards.forEach(card => profileObserver.observe(card));
 
-    // Profile Popup
-    profileCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.details-toggle') || e.target.closest('.profile-social a')) return;
-            const popup = createProfilePopup(card);
-            document.body.appendChild(popup);
-            setTimeout(() => popup.classList.add('active'), 10);
-        });
-    });
+    // // Profile Popup
+    // profileCards.forEach(card => {
+    //     card.addEventListener('click', (e) => {
+    //         if (e.target.closest('.details-toggle') || e.target.closest('.profile-social a')) return;
+    //         const popup = createProfilePopup(card);
+    //         document.body.appendChild(popup);
+    //         setTimeout(() => popup.classList.add('active'), 10);
+    //     });
+    // });
 
     function createProfilePopup(card) {
         const popup = document.createElement('div');
